@@ -6,12 +6,9 @@ import os
 from collections.abc import Iterator, Sequence
 from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
-from pathlib import Path
 from uuid import UUID
 
 import pytest
-from alembic import command
-from alembic.config import Config
 from sqlalchemy import Engine, text
 from sqlalchemy.orm import Session, sessionmaker
 
@@ -29,6 +26,10 @@ from mnemo.models.capture import Capture, SourceType
 from mnemo.models.entity import Entity, EntityType
 from mnemo.models.memory import Memory
 from mnemo.models.types import MemoryKind, MemoryStatus
+from mnemo.persistence.postgres.migration import (
+    _downgrade_postgres_database,
+    upgrade_postgres_database,
+)
 from mnemo.persistence.postgres.repositories import (
     PostgresCaptureRepository,
     PostgresEntityRepository,
@@ -49,7 +50,6 @@ from mnemo.recall import (
 
 pytestmark = pytest.mark.postgres
 
-ROOT = Path(__file__).parents[2]
 USER_ID = "ingestion-postgres-user"
 OTHER_USER_ID = "other-ingestion-user"
 NOW = datetime(2026, 10, 9, 15, tzinfo=UTC)
@@ -65,17 +65,14 @@ def ingestion_postgres_engine() -> Iterator[Engine]:
     if not database_url:
         pytest.skip("MNEMO_TEST_DATABASE_URL is required for PostgreSQL integration tests")
 
-    alembic_config = Config(str(ROOT / "alembic.ini"))
-    alembic_config.set_main_option("script_location", str(ROOT / "migrations"))
-    alembic_config.set_main_option("sqlalchemy.url", database_url.replace("%", "%%"))
-    command.upgrade(alembic_config, "head")
+    upgrade_postgres_database(database_url)
 
     engine = create_postgres_engine(database_url)
     try:
         yield engine
     finally:
         engine.dispose()
-        command.downgrade(alembic_config, "base")
+        _downgrade_postgres_database(database_url)
 
 
 @pytest.fixture(autouse=True)

@@ -1,0 +1,56 @@
+name: Release dry run
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Commit, branch, or tag to validate
+        required: true
+        default: main
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Build and validate release artifacts
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: public.ecr.aws/docker/library/postgres:16
+        env:
+          POSTGRES_DB: mnemo_distribution
+          POSTGRES_USER: mnemo
+          POSTGRES_PASSWORD: mnemo_distribution_password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U mnemo -d mnemo_distribution"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      MNEMO_DISTRIBUTION_DATABASE_URL: postgresql+psycopg://mnemo:mnemo_distribution_password@127.0.0.1:5432/mnemo_distribution
+    steps:
+      - name: Check out requested ref
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.ref }}
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Build and validate distributions
+        uses: ./.github/actions/validate-distribution
+
+      - name: Upload dry-run artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: release-dry-run-${{ github.sha }}
+          path: dist/
+          if-no-files-found: error
+          retention-days: 14

@@ -1,5 +1,6 @@
 """Synchronous PostgreSQL repository adapters."""
 
+from mnemo.persistence.postgres.migration import upgrade_postgres_database
 from mnemo.persistence.postgres.repositories import (
     PostgresCaptureRepository,
     PostgresEntityRepository,
@@ -17,4 +18,5 @@ __all__ = [
     "PostgresRepositoryError",
     "create_postgres_engine",
     "create_session_factory",
+    "upgrade_postgres_database",
 ]

@@ -9,8 +9,6 @@ from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from uuid import UUID
 
-from alembic import command
-from alembic.config import Config
 from sqlalchemy import text
 from sqlalchemy.engine import Engine
 
@@ -29,6 +27,7 @@ from mnemo.models.capture import Capture, SourceType
 from mnemo.models.entity import Entity, EntityType
 from mnemo.models.memory import Memory
 from mnemo.models.types import MemoryKind, MemoryStatus
+from mnemo.persistence.postgres.migration import upgrade_postgres_database
 from mnemo.persistence.postgres.repositories import (
     PostgresCaptureRepository,
     PostgresEntityRepository,
@@ -521,10 +520,7 @@ def _evaluate_superseded_parking_history(
 
 
 def run(database_url: str, *, json_output: Path | None = None) -> int:
-    alembic_config = Config(str(ROOT / "alembic.ini"))
-    alembic_config.set_main_option("script_location", str(ROOT / "migrations"))
-    alembic_config.set_main_option("sqlalchemy.url", database_url.replace("%", "%%"))
-    command.upgrade(alembic_config, "head")
+    upgrade_postgres_database(database_url)
     engine = create_postgres_engine(database_url)
     try:
         _clear_evaluation_rows(engine)

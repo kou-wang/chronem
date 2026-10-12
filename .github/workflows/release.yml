@@ -1,0 +1,87 @@
+name: Release Python distribution
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing version tag to build, such as v0.1.0
+        required: true
+        type: string
+      publish:
+        description: Publish validated artifacts to PyPI
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build tagged release artifacts
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: public.ecr.aws/docker/library/postgres:16
+        env:
+          POSTGRES_DB: mnemo_distribution
+          POSTGRES_USER: mnemo
+          POSTGRES_PASSWORD: mnemo_distribution_password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U mnemo -d mnemo_distribution"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      MNEMO_DISTRIBUTION_DATABASE_URL: postgresql+psycopg://mnemo:mnemo_distribution_password@127.0.0.1:5432/mnemo_distribution
+    steps:
+      - name: Check out release tag
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.tag }}
+          fetch-depth: 0
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Validate tag, version, and changelog
+        env:
+          RELEASE_TAG: ${{ inputs.tag }}
+        run: python scripts/validate_release_tag.py "$RELEASE_TAG"
+
+      - name: Build and validate distributions
+        uses: ./.github/actions/validate-distribution
+
+      - name: Upload validated release artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: python-release-${{ inputs.tag }}
+          path: dist/
+          if-no-files-found: error
+          retention-days: 30
+
+  publish:
+    name: Publish to PyPI with trusted publishing
+    if: ${{ inputs.publish }}
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/project/mnemo-memory/
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Download validated release artifacts
+        uses: actions/download-artifact@v8
+        with:
+          name: python-release-${{ inputs.tag }}
+          path: dist/
+
+      - name: Publish distributions
+        uses: pypa/gh-action-pypi-publish@release/v1

@@ -168,11 +168,15 @@ lookup. Generic status transition operations must reject `SUPERSEDED` because
 supersession requires an atomic replacement-aware operation.
 
 The PostgreSQL adapter uses SQLAlchemy 2.x with psycopg 3 and Alembic-managed
-schema migrations. It preserves structured memory values in `JSONB` and stores
-timezone-aware timestamps. Composite foreign keys enforce that memory subjects,
-objects, captures, and supersession links remain in the same user scope. A
-partial unique index enforces at most one active `CURRENT_STATE` per
-`(user_id, memory_key)` even when a caller bypasses repository code.
+schema migrations. The Alembic environment and immutable revision scripts live
+inside the adapter package; `upgrade_postgres_database()` constructs its
+configuration from those installed resources, so schema management does not
+depend on a source checkout. The adapter preserves structured memory values in
+`JSONB` and stores timezone-aware timestamps. Composite foreign keys enforce
+that memory subjects, objects, captures, and supersession links remain in the
+same user scope. A partial unique index enforces at most one active
+`CURRENT_STATE` per `(user_id, memory_key)` even when a caller bypasses
+repository code.
 
 Each repository mutation owns one database transaction. Current-state
 supersession locks the existing active row and changes it to `SUPERSEDED` while

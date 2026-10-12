@@ -4,9 +4,9 @@ Last updated: 2026-10-12
 
 ## Current phase
 
-**Open-source launch readiness (Issue #30)**
+**Packaging and release foundations (Issue #32)**
 
-Working branch: `feat/open-source-launch-readiness`
+Working branch: `feat/release-foundations`
 
 Sprint 1 PR: **#6 — merged**
 
@@ -34,7 +34,9 @@ Grounded answer synthesis PR: **#27 — merged**
 
 Deterministic evaluation harness PR: **#29 — merged**
 
-Issue #30 implementation: **complete; awaiting maintainer review**
+Open-source launch readiness PR: **#31 — merged**
+
+Issue #32 implementation: **complete; awaiting maintainer review**
 
 ## Completed
 
@@ -256,11 +258,9 @@ Implemented:
 - explicit separation between deterministic contracts and live-provider quality
 - evaluation architecture, execution, and dataset documentation
 
-## In progress
-
 ### Issue #30 — Open-source launch readiness
 
-Implementation complete; awaiting maintainer review.
+Completed and reviewed.
 
 Implemented:
 - external-developer README and architecture overview
@@ -271,10 +271,26 @@ Implemented:
 - accurate public positioning of deterministic versus provider-quality evaluation
 - an open-source-first roadmap with consumer/mobile work retained but deferred
 
+## In progress
+
+### Issue #32 — Packaging and release foundations
+
+Implementation complete; awaiting maintainer review.
+
+Implemented:
+- wheel and source-distribution builds using Hatchling
+- strict metadata and required packaged-file validation
+- isolated installed-wheel import, resource, public-API, example, and packaged
+  PostgreSQL migration/repository smoke tests
+- PR/main distribution CI plus a manual artifact-only release dry run
+- a tag-validated, manual release workflow using PyPI trusted publishing
+- a pre-1.0 versioning policy, changelog, and maintainer release checklist
+- accurate source-install and unpublished-package documentation
+
 ## Next
 
-1. Review and merge Issue #30's launch-readiness PR
-2. Define packaging and release automation in dedicated scope
+1. Review and merge Issue #32's release-foundations PR
+2. Configure repository/PyPI trusted publishing before an intentional release
 3. Expand examples, integrations, and extension-point documentation
 4. Define community-facing provider-quality evaluation
 5. Consider semantic/hybrid retrieval only when reusable use cases justify it
@@ -282,13 +298,13 @@ Implemented:
 
 ## Current constraints
 
-Issue #30 improves adoption and repository usability without adding:
+Issue #32 improves distribution reliability without adding:
 - FastAPI
 - pgvector
 - React Native / Expo code
 - lifecycle semantic changes
 - retrieval, lifecycle, entity-resolution, or answer semantic changes
-- release credentials or PyPI publishing
+- a published release, static package-index credentials, or automatic version bumps
 - telemetry, analytics, or monetization code
 
 ## Product direction

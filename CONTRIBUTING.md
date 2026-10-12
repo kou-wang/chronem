@@ -51,6 +51,22 @@ docker stop mnemo-postgres
 The deterministic evaluation checks software contracts; it is not a live-model
 accuracy benchmark. See [Evaluation](docs/evaluation.md).
 
+## Distribution changes
+
+Packaging changes must validate built artifacts, not only an editable install:
+
+```bash
+artifact_dir="$(mktemp -d)"
+python -m build --outdir "$artifact_dir"
+python -m twine check --strict "$artifact_dir"/*
+python scripts/validate_distribution.py "$artifact_dir"
+```
+
+Follow the complete fresh-environment smoke test in
+[Releasing Mnemo](docs/releasing.md). Version changes and publishing are
+maintainer decisions; ordinary contributions should keep the current version
+unless their Issue explicitly authorizes a release preparation.
+
 ## Workflow and architecture changes
 
 Use the repository workflow: Issue → focused branch → pull request → review →

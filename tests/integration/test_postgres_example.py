@@ -7,8 +7,11 @@ from collections.abc import Iterator
 from pathlib import Path
 
 import pytest
-from alembic import command
-from alembic.config import Config
+
+from mnemo.persistence.postgres.migration import (
+    _downgrade_postgres_database,
+    upgrade_postgres_database,
+)
 
 pytestmark = pytest.mark.postgres
 
@@ -21,12 +24,9 @@ def migrated_example_database() -> Iterator[str]:
     if not database_url:
         pytest.skip("MNEMO_TEST_DATABASE_URL is required for PostgreSQL integration tests")
 
-    alembic_config = Config(str(ROOT / "alembic.ini"))
-    alembic_config.set_main_option("script_location", str(ROOT / "migrations"))
-    alembic_config.set_main_option("sqlalchemy.url", database_url.replace("%", "%%"))
-    command.upgrade(alembic_config, "head")
+    upgrade_postgres_database(database_url)
     yield database_url
-    command.downgrade(alembic_config, "base")
+    _downgrade_postgres_database(database_url)
 
 
 def test_postgres_full_engine_example_runs(migrated_example_database: str) -> None:
