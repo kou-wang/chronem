@@ -12,8 +12,8 @@ from openai import OpenAI, OpenAIError
 from openai.lib._pydantic import to_strict_json_schema
 from pydantic import ValidationError
 
-import mnemo.providers.openai.recall_planner as planner_module
-from mnemo import (
+import chronem.providers.openai.recall_planner as planner_module
+from chronem import (
     EntityType,
     MemoryKind,
     RecallMode,
@@ -22,14 +22,14 @@ from mnemo import (
     RecallPlanOutcome,
     StructuredRecallRequest,
 )
-from mnemo.evaluation.planning import recall_planning_cases
-from mnemo.providers.openai import (
+from chronem.evaluation.planning import recall_planning_cases
+from chronem.providers.openai import (
     OpenAIRecallPlanner,
     OpenAIRecallProviderError,
     OpenAIRecallResponseError,
 )
-from mnemo.providers.openai.recall_prompt import RECALL_PLANNING_INSTRUCTIONS
-from mnemo.providers.openai.recall_schemas import (
+from chronem.providers.openai.recall_prompt import RECALL_PLANNING_INSTRUCTIONS
+from chronem.providers.openai.recall_schemas import (
     OpenAIPlannedRecallRequest,
     OpenAIRecallPlanOutput,
 )
@@ -318,8 +318,8 @@ def test_configured_model_and_strict_format_are_sent_to_responses_parse() -> Non
     call = client.responses.calls[0]
     assert call["model"] == "recall-planning-model"
     assert call["text_format"] is OpenAIRecallPlanOutput
-    assert plan.__class__.__module__ == "mnemo.recall.models"
-    assert plan.requests[0].__class__.__module__ == "mnemo.recall.models"
+    assert plan.__class__.__module__ == "chronem.recall.models"
+    assert plan.requests[0].__class__.__module__ == "chronem.recall.models"
     assert not any(
         type(value).__module__.startswith("openai")
         for value in plan.requests[0].__dict__.values()
@@ -387,9 +387,9 @@ def test_planner_has_no_deterministic_system_authority_imports() -> None:
     source = inspect.getsource(planner_module)
 
     for forbidden in (
-        "mnemo.persistence",
-        "mnemo.entities",
-        "mnemo.lifecycle",
+        "chronem.persistence",
+        "chronem.entities",
+        "chronem.lifecycle",
         "MemoryRepository",
         "EntityResolver",
         "StructuredRecallService",

@@ -60,8 +60,8 @@ Run locally:
 ```bash
 ruff check .
 mypy src
-pytest --cov=mnemo --cov-report=term-missing
-coverage report --include="*/mnemo/lifecycle/*" --fail-under=90
+pytest --cov=chronem --cov-report=term-missing
+coverage report --include="*/chronem/lifecycle/*" --fail-under=90
 python scripts/run_deterministic_evaluation.py
 ```
 

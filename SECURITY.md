@@ -20,7 +20,7 @@ maintainer capacity. No response-time SLA is currently promised.
 
 Security issues include cross-user data exposure, lifecycle or persistence
 invariant bypasses, unsafe provider data handling, credential exposure, and
-dependency vulnerabilities with a demonstrated impact on Mnemo. General bugs
+dependency vulnerabilities with a demonstrated impact on Chronem. General bugs
 and feature requests belong in the public issue tracker.
 
 Never submit real personal memory data or working secrets in a report.

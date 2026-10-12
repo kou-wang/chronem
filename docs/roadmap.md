@@ -95,26 +95,33 @@ trusted publishing. Publishing still requires explicit maintainer action plus
 repository/PyPI configuration; no static credential or automatic version bump
 belongs in the repository.
 
-## 12. Examples, integrations, and extension points
+## 12. Pre-release identity migration
+
+Issue #39 renames the unreleased project, distribution, and import package to
+Chronem before `v0.1.0`. It prepares canonical URLs for `kou-wang/chronem` and
+pauses Issue #34 until the maintainer completes the GitHub repository rename.
+The change adds no compatibility package and does not alter engine semantics.
+
+## 13. Examples, integrations, and extension points
 
 Expand provider, framework, and application examples according to demonstrated
 external-developer needs while keeping provider-independent contracts
 authoritative. Integrations must not bypass deterministic lifecycle,
 user-isolation, provenance, or grounded-recall boundaries.
 
-## 13. Community-facing provider-quality evaluation
+## 14. Community-facing provider-quality evaluation
 
 Define transparent datasets, model/provider metadata, execution policy, and
 thresholds for live quality evaluation. Keep these results separate from the
 deterministic contract gate; mocked outputs are never model-accuracy evidence.
 
-## 14. Semantic and hybrid retrieval
+## 15. Semantic and hybrid retrieval
 
 Consider semantic/hybrid retrieval only when reusable engine use cases justify
 it. Structured and temporal recall remain the baseline and source of truth;
 technology and ranking choices are `TBD`.
 
-## 15. Consumer and mobile application work — deferred
+## 16. Consumer and mobile application work — deferred
 
 The historical direction remains a low-friction iOS-first consumer experience
 using React Native + Expo while preserving an Android path. It is explicitly

@@ -5,7 +5,7 @@ not select future implementation details; unresolved choices are marked `TBD`.
 
 ## Product position
 
-Mnemo is an everyday personal-memory system that helps people capture small but
+Chronem is an everyday personal-memory system that helps people capture small but
 useful details and recall them later. It is not a generic notes application and
 not a thin retrieval-augmented-generation wrapper.
 
@@ -18,7 +18,7 @@ The product loop is:
 4. **Recall** — synthesize a useful supported answer rather than returning an
    unexplained list of raw search results.
 
-When available evidence does not support an answer, Mnemo must abstain instead
+When available evidence does not support an answer, Chronem must abstain instead
 of fabricating a personal fact.
 
 ## Capture experience
@@ -42,7 +42,7 @@ by default after transcription.
 
 ## Memory requirements
 
-Mnemo represents memories with five top-level kinds:
+Chronem represents memories with five top-level kinds:
 
 - `FACT`: durable information such as a birthday;
 - `PREFERENCE`: likes, dislikes, and preferences that may coexist;
@@ -71,7 +71,7 @@ evidence.
 - Users must be able to inspect and edit or correct a memory that AI
   interpretation got wrong. The editing interface is future-scoped.
 - Raw audio must be deleted by default after transcription.
-- Use of external AI providers must be disclosed when applicable. Mnemo must
+- Use of external AI providers must be disclosed when applicable. Chronem must
   not claim that processing or data remains entirely on-device when a cloud
   provider is used.
 - User data is not intended to be used for model training.
@@ -113,7 +113,7 @@ scope. A future change requires explicit maintainer approval and Issue scope.
 
 ## Architecture guardrails
 
-- Do not turn Mnemo into a general-purpose notes application.
+- Do not turn Chronem into a general-purpose notes application.
 - Do not route every query through vector search.
 - Do not allow probabilistic extraction to control persistence or lifecycle.
 - Do not silently merge ambiguous entities.

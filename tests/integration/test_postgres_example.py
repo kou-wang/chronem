@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pytest
 
-from mnemo.persistence.postgres.migration import (
+from chronem.persistence.postgres.migration import (
     _downgrade_postgres_database,
     upgrade_postgres_database,
 )
@@ -20,9 +20,9 @@ ROOT = Path(__file__).parents[2]
 
 @pytest.fixture(scope="module")
 def migrated_example_database() -> Iterator[str]:
-    database_url = os.environ.get("MNEMO_TEST_DATABASE_URL")
+    database_url = os.environ.get("CHRONEM_TEST_DATABASE_URL")
     if not database_url:
-        pytest.skip("MNEMO_TEST_DATABASE_URL is required for PostgreSQL integration tests")
+        pytest.skip("CHRONEM_TEST_DATABASE_URL is required for PostgreSQL integration tests")
 
     upgrade_postgres_database(database_url)
     yield database_url
@@ -31,7 +31,7 @@ def migrated_example_database() -> Iterator[str]:
 
 def test_postgres_full_engine_example_runs(migrated_example_database: str) -> None:
     environment = os.environ.copy()
-    environment["MNEMO_DATABASE_URL"] = migrated_example_database
+    environment["CHRONEM_DATABASE_URL"] = migrated_example_database
     result = subprocess.run(
         [sys.executable, str(ROOT / "examples" / "postgres_full_engine.py")],
         cwd=ROOT,

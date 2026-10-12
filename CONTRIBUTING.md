@@ -1,16 +1,16 @@
-# Contributing to Mnemo
+# Contributing to Chronem
 
-Thanks for helping make Mnemo useful as a reusable temporal memory engine.
+Thanks for helping make Chronem useful as a reusable temporal memory engine.
 Start with an Issue so the behavior, boundaries, and acceptance criteria are
 clear before implementation.
 
 ## Local setup
 
-Mnemo supports Python 3.11 and 3.12.
+Chronem supports Python 3.11 and 3.12.
 
 ```bash
-git clone https://github.com/kou-wang/mnemo-memory.git
-cd mnemo-memory
+git clone https://github.com/kou-wang/chronem.git
+cd chronem
 python -m venv .venv
 source .venv/bin/activate
 python -m pip install -e ".[dev]"
@@ -21,8 +21,8 @@ Run the local gates before opening a pull request:
 ```bash
 ruff check .
 mypy src
-pytest --cov=mnemo --cov-report=term-missing
-coverage report --include="*/mnemo/lifecycle/*" --fail-under=90
+pytest --cov=chronem --cov-report=term-missing
+coverage report --include="*/chronem/lifecycle/*" --fail-under=90
 ```
 
 Behavior changes require focused regression tests. Lifecycle changes are
@@ -35,17 +35,17 @@ These commands are destructive to their configured database. Use a disposable
 database containing no data you need to retain.
 
 ```bash
-docker run --name mnemo-postgres --rm -d \
-  -e POSTGRES_USER=mnemo \
-  -e POSTGRES_PASSWORD=mnemo \
-  -e POSTGRES_DB=mnemo_test \
+docker run --name chronem-postgres --rm -d \
+  -e POSTGRES_USER=chronem \
+  -e POSTGRES_PASSWORD=chronem \
+  -e POSTGRES_DB=chronem_test \
   -p 5432:5432 postgres:16
-until docker exec mnemo-postgres pg_isready -U mnemo -d mnemo_test; do sleep 1; done
+until docker exec chronem-postgres pg_isready -U chronem -d chronem_test; do sleep 1; done
 
-export MNEMO_TEST_DATABASE_URL="postgresql+psycopg://mnemo:mnemo@127.0.0.1:5432/mnemo_test"
+export CHRONEM_TEST_DATABASE_URL="postgresql+psycopg://chronem:chronem@127.0.0.1:5432/chronem_test"
 pytest -m postgres
 python scripts/run_deterministic_evaluation.py
-docker stop mnemo-postgres
+docker stop chronem-postgres
 ```
 
 The deterministic evaluation checks software contracts; it is not a live-model
@@ -63,7 +63,7 @@ python scripts/validate_distribution.py "$artifact_dir"
 ```
 
 Follow the complete fresh-environment smoke test in
-[Releasing Mnemo](docs/releasing.md). Version changes and publishing are
+[Releasing Chronem](docs/releasing.md). Version changes and publishing are
 maintainer decisions; ordinary contributions should keep the current version
 unless their Issue explicitly authorizes a release preparation.
 

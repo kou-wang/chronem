@@ -1,4 +1,4 @@
-"""Run Mnemo's 100% deterministic contract evaluation gate."""
+"""Run Chronem's 100% deterministic contract evaluation gate."""
 
 from __future__ import annotations
 
@@ -12,8 +12,8 @@ from uuid import UUID
 from sqlalchemy import text
 from sqlalchemy.engine import Engine
 
-from mnemo.entities import DeterministicEntityResolver
-from mnemo.evaluation import (
+from chronem.entities import DeterministicEntityResolver
+from chronem.evaluation import (
     EvaluationDomain,
     EvaluationResult,
     StructuredRecallEvaluationCase,
@@ -22,20 +22,25 @@ from mnemo.evaluation import (
     evaluation_exit_code,
     run_core_evaluations,
 )
-from mnemo.interfaces.queries import MemoryQuery, MemoryQueryOrder
-from mnemo.models.capture import Capture, SourceType
-from mnemo.models.entity import Entity, EntityType
-from mnemo.models.memory import Memory
-from mnemo.models.types import MemoryKind, MemoryStatus
-from mnemo.persistence.postgres.migration import upgrade_postgres_database
-from mnemo.persistence.postgres.repositories import (
+from chronem.interfaces.queries import MemoryQuery, MemoryQueryOrder
+from chronem.models.capture import Capture, SourceType
+from chronem.models.entity import Entity, EntityType
+from chronem.models.memory import Memory
+from chronem.models.types import MemoryKind, MemoryStatus
+from chronem.persistence.postgres.migration import upgrade_postgres_database
+from chronem.persistence.postgres.repositories import (
     PostgresCaptureRepository,
     PostgresEntityRepository,
     PostgresMemoryQueryRepository,
     PostgresMemoryRepository,
 )
-from mnemo.persistence.postgres.session import create_postgres_engine, create_session_factory
-from mnemo.recall import RecallMode, RecallOutcome, StructuredRecallRequest, StructuredRecallService
+from chronem.persistence.postgres.session import create_postgres_engine, create_session_factory
+from chronem.recall import (
+    RecallMode,
+    RecallOutcome,
+    StructuredRecallRequest,
+    StructuredRecallService,
+)
 
 ROOT = Path(__file__).parents[1]
 USER_ID = "evaluation-user"
@@ -554,11 +559,11 @@ def run(database_url: str, *, json_output: Path | None = None) -> int:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--database-url", default=os.environ.get("MNEMO_TEST_DATABASE_URL"))
+    parser.add_argument("--database-url", default=os.environ.get("CHRONEM_TEST_DATABASE_URL"))
     parser.add_argument("--json-output", type=Path)
     args = parser.parse_args()
     if not args.database_url:
-        parser.error("--database-url or MNEMO_TEST_DATABASE_URL is required")
+        parser.error("--database-url or CHRONEM_TEST_DATABASE_URL is required")
     return run(args.database_url, json_output=args.json_output)
 
 

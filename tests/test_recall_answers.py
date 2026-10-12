@@ -10,8 +10,8 @@ from uuid import UUID
 import pytest
 from pydantic import ValidationError
 
-import mnemo.answers.service as answer_service_module
-from mnemo import (
+import chronem.answers.service as answer_service_module
+from chronem import (
     NO_EVIDENCE_MESSAGE,
     Memory,
     MemoryKind,
@@ -29,7 +29,7 @@ from mnemo import (
     StructuredRecallResult,
     SynthesizedAnswer,
 )
-from mnemo.recall.orchestration import RecallOrchestrationService
+from chronem.recall.orchestration import RecallOrchestrationService
 
 NOW = datetime(2026, 10, 9, 20, tzinfo=UTC)
 USER_ID = "answer-user"
@@ -418,5 +418,5 @@ def test_answer_boundary_has_no_provider_or_persistence_leakage() -> None:
         type(value).__module__.startswith(("openai", "sqlalchemy"))
         for value in (result, result.recall_result, *result.evidence)
     )
-    for forbidden in ("mnemo.providers", "mnemo.persistence", "sqlalchemy", "openai"):
+    for forbidden in ("chronem.providers", "chronem.persistence", "sqlalchemy", "openai"):
         assert forbidden not in source

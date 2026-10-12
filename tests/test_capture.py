@@ -5,7 +5,7 @@ from datetime import UTC, datetime
 import pytest
 from pydantic import ValidationError
 
-from mnemo.models.capture import Capture, SourceType
+from chronem.models.capture import Capture, SourceType
 
 CAPTURED_AT = datetime(2026, 10, 8, 15, tzinfo=UTC)
 CREATED_AT = datetime(2026, 10, 8, 15, 0, 1, tzinfo=UTC)

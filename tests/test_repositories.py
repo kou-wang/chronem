@@ -7,15 +7,15 @@ from uuid import UUID, uuid4
 
 import pytest
 
-from mnemo.interfaces.repositories import (
+from chronem.interfaces.repositories import (
     CaptureRepository,
     MemoryRepository,
     RepositoryInvariantError,
 )
-from mnemo.lifecycle.engine import LifecycleAction, LifecycleEngine
-from mnemo.models.capture import Capture, SourceType
-from mnemo.models.memory import Memory
-from mnemo.models.types import MemoryKind, MemoryStatus
+from chronem.lifecycle.engine import LifecycleAction, LifecycleEngine
+from chronem.models.capture import Capture, SourceType
+from chronem.models.memory import Memory
+from chronem.models.types import MemoryKind, MemoryStatus
 
 NOW = datetime(2026, 10, 8, 15, tzinfo=UTC)
 

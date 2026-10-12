@@ -9,17 +9,17 @@ from datetime import UTC, datetime
 import pytest
 from pydantic import ValidationError
 
-from mnemo.interfaces.clock import Clock
-from mnemo.interfaces.entities import (
+from chronem.interfaces.clock import Clock
+from chronem.interfaces.entities import (
     EntityResolution,
     EntityResolutionOutcome,
     EntityResolver,
 )
-from mnemo.interfaces.extraction import Extractor
-from mnemo.models.candidate import CandidateMemory
-from mnemo.models.capture import Capture, SourceType
-from mnemo.models.entity import Entity, EntityType
-from mnemo.models.types import MemoryKind
+from chronem.interfaces.extraction import Extractor
+from chronem.models.candidate import CandidateMemory
+from chronem.models.capture import Capture, SourceType
+from chronem.models.entity import Entity, EntityType
+from chronem.models.types import MemoryKind
 
 NOW = datetime(2026, 10, 8, 15, tzinfo=UTC)
 

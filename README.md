@@ -1,11 +1,13 @@
-# Mnemo
+# Chronem
 
-Mnemo is an open-source temporal memory engine for AI applications. It turns
+> Temporal memory with lifecycle and provenance.
+
+Chronem is an open-source temporal memory engine for AI applications. It turns
 natural-language captures into structured, lifecycle-aware memory while keeping
 identity, state changes, persistence, and recall under deterministic control.
 
 LLMs may interpret language. They do not decide what gets persisted, silently
-merge identities, overwrite history, or invent evidence. Mnemo preserves source
+merge identities, overwrite history, or invent evidence. Chronem preserves source
 provenance and temporal history, and its recall path can abstain when stored
 evidence does not support an answer.
 
@@ -13,16 +15,16 @@ evidence does not support an answer.
 > OpenAI adapters, structured recall, grounded answers, and deterministic
 > contract evaluation are implemented. Semantic/vector retrieval is not.
 
-## Why Mnemo?
+## Why Chronem?
 
-| Approach | What it is good at | What Mnemo adds |
+| Approach | What it is good at | What Chronem adds |
 | --- | --- | --- |
 | Notes or key-value memory | Simple storage and direct lookup | Typed facts, preferences, current state, events, and intents with explicit lifecycle rules |
 | Chat-history storage | Preserving a conversation transcript | Durable memories separated from raw captures, with identity, semantic time, and provenance |
 | Vector stores | Similarity search over unstructured content | Deterministic structured/temporal lookup and state transitions; vector search is not the source of truth |
 | Thin RAG memory wrappers | Retrieving context for a model | A controlled memory lifecycle, conservative entity resolution, history retention, evidence validation, and abstention |
 
-Mnemo is an engine rather than a notes app or a complete assistant. Applications
+Chronem is an engine rather than a notes app or a complete assistant. Applications
 provide their own interface and may plug model providers into the interpretation
 and phrasing boundaries.
 
@@ -58,13 +60,13 @@ boundaries. There is currently no semantic/vector retrieval implementation.
 
 Requirements: Python 3.11 or 3.12 and Git.
 
-Mnemo is not published on PyPI yet. Install from a source checkout as shown
-below; do not assume `pip install mnemo-memory` is available until a release is
+Chronem is not published on PyPI yet. Install from a source checkout as shown
+below; do not assume `pip install chronem` is available until a release is
 listed on the package index.
 
 ```bash
-git clone https://github.com/kou-wang/mnemo-memory.git
-cd mnemo-memory
+git clone https://github.com/kou-wang/chronem.git
+cd chronem
 python -m venv .venv
 source .venv/bin/activate  # Windows PowerShell: .venv\Scripts\Activate.ps1
 python -m pip install -e .
@@ -94,18 +96,18 @@ answer. It needs a disposable PostgreSQL database but no API key or external AI
 service.
 
 ```bash
-docker run --name mnemo-postgres --rm -d \
-  -e POSTGRES_USER=mnemo \
-  -e POSTGRES_PASSWORD=mnemo \
-  -e POSTGRES_DB=mnemo \
+docker run --name chronem-postgres --rm -d \
+  -e POSTGRES_USER=chronem \
+  -e POSTGRES_PASSWORD=chronem \
+  -e POSTGRES_DB=chronem \
   -p 5432:5432 postgres:16
-until docker exec mnemo-postgres pg_isready -U mnemo -d mnemo; do sleep 1; done
+until docker exec chronem-postgres pg_isready -U chronem -d chronem; do sleep 1; done
 
 python -m pip install -e ".[postgres]"
-export MNEMO_DATABASE_URL="postgresql+psycopg://mnemo:mnemo@127.0.0.1:5432/mnemo"
+export CHRONEM_DATABASE_URL="postgresql+psycopg://chronem:chronem@127.0.0.1:5432/chronem"
 alembic upgrade head
 python examples/postgres_full_engine.py
-docker stop mnemo-postgres
+docker stop chronem-postgres
 ```
 
 That is the **source-checkout** workflow: the repository's `alembic.ini` points
@@ -113,15 +115,15 @@ to the same migrations packaged with the PostgreSQL adapter. From an installed
 wheel, no repository-local Alembic configuration is needed:
 
 ```bash
-python -m pip install "path/to/mnemo_memory-0.1.0-py3-none-any.whl[postgres]"
-python -m mnemo.persistence.postgres.migrations \
-  --database-url "$MNEMO_DATABASE_URL"
+python -m pip install "path/to/chronem-0.1.0-py3-none-any.whl[postgres]"
+python -m chronem.persistence.postgres.migrations \
+  --database-url "$CHRONEM_DATABASE_URL"
 ```
 
 Applications may instead call the public
-`mnemo.persistence.postgres.upgrade_postgres_database(database_url)` helper.
+`chronem.persistence.postgres.upgrade_postgres_database(database_url)` helper.
 Both installed-package paths locate the migration environment and version
-scripts inside Mnemo's wheel.
+scripts inside Chronem's wheel.
 
 The final lines show an evidence-backed answer with one validated citation and
 the retained `A1 (SUPERSEDED) -> B7 (ACTIVE)` history.
@@ -133,7 +135,7 @@ their own providers without giving a model persistence authority.
 
 ## Memory model and guarantees
 
-Mnemo models five top-level kinds:
+Chronem models five top-level kinds:
 
 - `FACT` — durable information; uncertain conflicting values are preserved.
 - `PREFERENCE` — preferences that may coexist.
@@ -169,7 +171,7 @@ This validates release artifacts without publishing them.
 
 Public releases are intentional maintainer actions using version tags and PyPI
 trusted publishing; no static package-index credential is stored in the
-repository. Mnemo has not yet been published. See the [changelog](CHANGELOG.md)
+repository. Chronem has not yet been published. See the [changelog](CHANGELOG.md)
 and [release process](docs/releasing.md).
 
 ## Optional OpenAI adapters

@@ -11,16 +11,16 @@ from pathlib import Path, PurePosixPath
 
 ROOT = Path(__file__).parents[1]
 REQUIRED_PACKAGE_FILES = (
-    "mnemo/py.typed",
-    "mnemo/evaluation/data/recall_planning.json",
-    "mnemo/persistence/postgres/migration.py",
-    "mnemo/persistence/postgres/migrations/__init__.py",
-    "mnemo/persistence/postgres/migrations/__main__.py",
-    "mnemo/persistence/postgres/migrations/env.py",
-    "mnemo/persistence/postgres/migrations/script.py.mako",
-    "mnemo/persistence/postgres/migrations/versions/__init__.py",
-    "mnemo/persistence/postgres/migrations/versions/20261008_0001_initial_postgres.py",
-    "mnemo/persistence/postgres/migrations/versions/20261009_0002_structured_recall_index.py",
+    "chronem/py.typed",
+    "chronem/evaluation/data/recall_planning.json",
+    "chronem/persistence/postgres/migration.py",
+    "chronem/persistence/postgres/migrations/__init__.py",
+    "chronem/persistence/postgres/migrations/__main__.py",
+    "chronem/persistence/postgres/migrations/env.py",
+    "chronem/persistence/postgres/migrations/script.py.mako",
+    "chronem/persistence/postgres/migrations/versions/__init__.py",
+    "chronem/persistence/postgres/migrations/versions/20261008_0001_initial_postgres.py",
+    "chronem/persistence/postgres/migrations/versions/20261009_0002_structured_recall_index.py",
 )
 FORBIDDEN_SDIST_DIRECTORIES = {
     ".git",
@@ -91,23 +91,30 @@ def _single_artifact(directory: Path, pattern: str) -> Path:
 
 
 def _validate_wheel(wheel: Path, *, version: str) -> None:
-    expected_name = f"mnemo_memory-{version}-py3-none-any.whl"
+    expected_name = f"chronem-{version}-py3-none-any.whl"
     if wheel.name != expected_name:
         raise ValueError(f"expected wheel {expected_name}, found {wheel.name}")
 
     with zipfile.ZipFile(wheel) as archive:
         names = set(archive.namelist())
+        legacy_package_files = sorted(
+            name for name in names if name == "mnemo" or name.startswith("mnemo/")
+        )
+        if legacy_package_files:
+            raise ValueError(
+                f"wheel contains forbidden legacy mnemo package: {legacy_package_files}"
+            )
         missing = set(REQUIRED_PACKAGE_FILES) - names
         if missing:
             raise ValueError(f"wheel is missing required files: {sorted(missing)}")
 
-        metadata_path = f"mnemo_memory-{version}.dist-info/METADATA"
+        metadata_path = f"chronem-{version}.dist-info/METADATA"
         if metadata_path not in names:
             raise ValueError(f"wheel is missing {metadata_path}")
         metadata = email.message_from_bytes(archive.read(metadata_path))
 
     expected_metadata = {
-        "Name": "mnemo-memory",
+        "Name": "chronem",
         "Version": version,
         "Requires-Python": ">=3.11",
         "License-Expression": "Apache-2.0",
@@ -120,11 +127,11 @@ def _validate_wheel(wheel: Path, *, version: str) -> None:
 
 
 def _validate_sdist(sdist: Path, *, version: str) -> None:
-    expected_name = f"mnemo_memory-{version}.tar.gz"
+    expected_name = f"chronem-{version}.tar.gz"
     if sdist.name != expected_name:
         raise ValueError(f"expected sdist {expected_name}, found {sdist.name}")
 
-    prefix = f"mnemo_memory-{version}/"
+    prefix = f"chronem-{version}/"
     required = {
         f"{prefix}LICENSE",
         f"{prefix}README.md",

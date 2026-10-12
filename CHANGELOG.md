@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to Mnemo will be documented in this file. The format follows
+All notable changes to Chronem will be documented in this file. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and releases follow
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
@@ -41,5 +41,5 @@ All notable changes to Mnemo will be documented in this file. The format follows
 - Release publishing is designed for GitHub Actions OIDC trusted publishing
   without a static PyPI credential in the repository.
 
-[Unreleased]: https://github.com/kou-wang/mnemo-memory/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/kou-wang/mnemo-memory/releases/tag/v0.1.0
+[Unreleased]: https://github.com/kou-wang/chronem/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/kou-wang/chronem/releases/tag/v0.1.0

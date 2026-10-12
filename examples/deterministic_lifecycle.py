@@ -1,9 +1,9 @@
-"""Zero-network walkthrough of Mnemo's deterministic CURRENT_STATE lifecycle."""
+"""Zero-network walkthrough of Chronem's deterministic CURRENT_STATE lifecycle."""
 
 from datetime import UTC, datetime, timedelta
 from uuid import UUID
 
-from mnemo import LifecycleAction, LifecycleEngine, Memory, MemoryKind, MemoryStatus
+from chronem import LifecycleAction, LifecycleEngine, Memory, MemoryKind, MemoryStatus
 
 USER_ID = "quickstart-user"
 CAR_ID = UUID("00000000-0000-0000-0000-000000000001")

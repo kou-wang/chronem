@@ -14,21 +14,21 @@ from openai import OpenAI, OpenAIError
 from openai.lib._pydantic import to_strict_json_schema
 from pydantic import ValidationError
 
-import mnemo.providers.openai.answer_synthesizer as synthesizer_module
-from mnemo import (
+import chronem.providers.openai.answer_synthesizer as synthesizer_module
+from chronem import (
     AnswerSynthesizer,
     Memory,
     MemoryKind,
     MemoryStatus,
     SynthesizedAnswer,
 )
-from mnemo.providers.openai import (
+from chronem.providers.openai import (
     OpenAIAnswerProviderError,
     OpenAIAnswerResponseError,
     OpenAIAnswerSynthesizer,
 )
-from mnemo.providers.openai.answer_prompt import ANSWER_SYNTHESIS_INSTRUCTIONS
-from mnemo.providers.openai.answer_schemas import OpenAIAnswerOutput
+from chronem.providers.openai.answer_prompt import ANSWER_SYNTHESIS_INSTRUCTIONS
+from chronem.providers.openai.answer_schemas import OpenAIAnswerOutput
 
 NOW = datetime(2026, 10, 9, 20, tzinfo=UTC)
 USER_ID = "private-user-id-never-send"
@@ -248,7 +248,7 @@ def test_adapter_has_no_repository_or_recall_authority_imports() -> None:
     source = inspect.getsource(synthesizer_module)
 
     for forbidden in (
-        "mnemo.persistence",
+        "chronem.persistence",
         "MemoryRepository",
         "EntityResolver",
         "RecallPlanner",

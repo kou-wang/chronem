@@ -1,4 +1,4 @@
-"""Run Mnemo's provider-independent engine path against disposable PostgreSQL."""
+"""Run Chronem's provider-independent engine path against disposable PostgreSQL."""
 
 from __future__ import annotations
 
@@ -9,7 +9,7 @@ from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
 from uuid import uuid4
 
-from mnemo import (
+from chronem import (
     CandidateMemory,
     Capture,
     DeterministicEntityResolver,
@@ -30,7 +30,7 @@ from mnemo import (
     StructuredRecallService,
     SynthesizedAnswer,
 )
-from mnemo.persistence.postgres import (
+from chronem.persistence.postgres import (
     PostgresCaptureRepository,
     PostgresEntityRepository,
     PostgresMemoryQueryRepository,
@@ -192,12 +192,12 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--database-url",
-        default=os.environ.get("MNEMO_DATABASE_URL"),
-        help="SQLAlchemy psycopg URL (defaults to MNEMO_DATABASE_URL)",
+        default=os.environ.get("CHRONEM_DATABASE_URL"),
+        help="SQLAlchemy psycopg URL (defaults to CHRONEM_DATABASE_URL)",
     )
     args = parser.parse_args()
     if not args.database_url:
-        parser.error("--database-url or MNEMO_DATABASE_URL is required")
+        parser.error("--database-url or CHRONEM_DATABASE_URL is required")
     run(args.database_url)
 
 

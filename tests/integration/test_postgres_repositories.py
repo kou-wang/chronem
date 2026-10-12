@@ -13,22 +13,22 @@ from sqlalchemy import Engine, text
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session, sessionmaker
 
-from mnemo.interfaces.repositories import RepositoryInvariantError
-from mnemo.models.capture import Capture, SourceType
-from mnemo.models.entity import Entity, EntityType
-from mnemo.models.memory import Memory
-from mnemo.models.types import MemoryKind, MemoryStatus
-from mnemo.persistence.postgres.mapping import memory_to_row
-from mnemo.persistence.postgres.migration import (
+from chronem.interfaces.repositories import RepositoryInvariantError
+from chronem.models.capture import Capture, SourceType
+from chronem.models.entity import Entity, EntityType
+from chronem.models.memory import Memory
+from chronem.models.types import MemoryKind, MemoryStatus
+from chronem.persistence.postgres.mapping import memory_to_row
+from chronem.persistence.postgres.migration import (
     _downgrade_postgres_database,
     upgrade_postgres_database,
 )
-from mnemo.persistence.postgres.repositories import (
+from chronem.persistence.postgres.repositories import (
     PostgresCaptureRepository,
     PostgresEntityRepository,
     PostgresMemoryRepository,
 )
-from mnemo.persistence.postgres.session import create_postgres_engine, create_session_factory
+from chronem.persistence.postgres.session import create_postgres_engine, create_session_factory
 
 pytestmark = pytest.mark.postgres
 
@@ -41,9 +41,9 @@ def _id(number: int) -> UUID:
 
 @pytest.fixture(scope="session")
 def postgres_engine() -> Iterator[Engine]:
-    database_url = os.environ.get("MNEMO_TEST_DATABASE_URL")
+    database_url = os.environ.get("CHRONEM_TEST_DATABASE_URL")
     if not database_url:
-        pytest.skip("MNEMO_TEST_DATABASE_URL is required for PostgreSQL integration tests")
+        pytest.skip("CHRONEM_TEST_DATABASE_URL is required for PostgreSQL integration tests")
 
     upgrade_postgres_database(database_url)
 

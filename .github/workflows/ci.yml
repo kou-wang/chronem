@@ -16,18 +16,18 @@ jobs:
       postgres:
         image: public.ecr.aws/docker/library/postgres:16
         env:
-          POSTGRES_DB: mnemo_distribution
-          POSTGRES_USER: mnemo
-          POSTGRES_PASSWORD: mnemo_distribution_password
+          POSTGRES_DB: chronem_distribution
+          POSTGRES_USER: chronem
+          POSTGRES_PASSWORD: chronem_distribution_password
         ports:
           - 5432:5432
         options: >-
-          --health-cmd "pg_isready -U mnemo -d mnemo_distribution"
+          --health-cmd "pg_isready -U chronem -d chronem_distribution"
           --health-interval 5s
           --health-timeout 5s
           --health-retries 10
     env:
-      MNEMO_DISTRIBUTION_DATABASE_URL: postgresql+psycopg://mnemo:mnemo_distribution_password@127.0.0.1:5432/mnemo_distribution
+      CHRONEM_DISTRIBUTION_DATABASE_URL: postgresql+psycopg://chronem:chronem_distribution_password@127.0.0.1:5432/chronem_distribution
     steps:
       - name: Check out repository
         uses: actions/checkout@v7
@@ -61,19 +61,19 @@ jobs:
       postgres:
         image: public.ecr.aws/docker/library/postgres:16
         env:
-          POSTGRES_DB: mnemo_test
-          POSTGRES_USER: mnemo
-          POSTGRES_PASSWORD: mnemo_test_password
+          POSTGRES_DB: chronem_test
+          POSTGRES_USER: chronem
+          POSTGRES_PASSWORD: chronem_test_password
         ports:
           - 5432:5432
         options: >-
-          --health-cmd "pg_isready -U mnemo -d mnemo_test"
+          --health-cmd "pg_isready -U chronem -d chronem_test"
           --health-interval 5s
           --health-timeout 5s
           --health-retries 10
 
     env:
-      MNEMO_TEST_DATABASE_URL: postgresql+psycopg://mnemo:mnemo_test_password@127.0.0.1:5432/mnemo_test
+      CHRONEM_TEST_DATABASE_URL: postgresql+psycopg://chronem:chronem_test_password@127.0.0.1:5432/chronem_test
 
     steps:
       - name: Check out repository
@@ -97,13 +97,13 @@ jobs:
         run: mypy src
 
       - name: Unit tests with coverage
-        run: pytest -m "not postgres" --cov=mnemo --cov-report=term-missing
+        run: pytest -m "not postgres" --cov=chronem --cov-report=term-missing
 
       - name: PostgreSQL integration tests
-        run: pytest -m postgres --cov=mnemo --cov-append --cov-report=term-missing
+        run: pytest -m postgres --cov=chronem --cov-append --cov-report=term-missing
 
       - name: Deterministic contract evaluation
         run: python scripts/run_deterministic_evaluation.py
 
       - name: Enforce lifecycle coverage
-        run: coverage report --include="*/mnemo/lifecycle/*" --fail-under=90
+        run: coverage report --include="*/chronem/lifecycle/*" --fail-under=90

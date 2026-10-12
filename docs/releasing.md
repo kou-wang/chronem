@@ -1,11 +1,11 @@
-# Releasing Mnemo
+# Releasing Chronem
 
-Mnemo is not currently published on PyPI. This document defines the pre-1.0
+Chronem is not currently published on PyPI. This document defines the pre-1.0
 policy and the steps maintainers will use for an intentional public release.
 
 ## Versioning policy
 
-Mnemo uses Semantic Versioning with a manual version in `pyproject.toml` and a
+Chronem uses Semantic Versioning with a manual version in `pyproject.toml` and a
 matching `vMAJOR.MINOR.PATCH` Git tag.
 
 Before `1.0.0`:
@@ -25,7 +25,7 @@ version, and Git tag must match.
 
 From a clean checkout with `.[dev]` installed:
 
-Set `MNEMO_DISTRIBUTION_DATABASE_URL` to a fresh, disposable PostgreSQL database
+Set `CHRONEM_DISTRIBUTION_DATABASE_URL` to a fresh, disposable PostgreSQL database
 that the smoke test may migrate and write to.
 
 ```bash
@@ -48,7 +48,7 @@ cp examples/deterministic_lifecycle.py "$smoke_dir/"
   "$smoke_dir/bin/python" "$smoke_dir/smoke_installed_wheel.py"
   "$smoke_dir/bin/python" "$smoke_dir/deterministic_lifecycle.py"
   "$smoke_dir/bin/python" "$smoke_dir/smoke_installed_wheel_postgres.py" \
-    --database-url "$MNEMO_DISTRIBUTION_DATABASE_URL" \
+    --database-url "$CHRONEM_DISTRIBUTION_DATABASE_URL" \
     --source-root "$repository_root"
 )
 ```
@@ -62,7 +62,7 @@ ref and uploads the artifacts without publishing.
 
 ## Source-distribution contents
 
-Mnemo's sdist intentionally includes source-facing project material useful for
+Chronem's sdist intentionally includes source-facing project material useful for
 inspection and downstream validation: source code, tests, documentation,
 examples, scripts, GitHub automation, and contributor/agent configuration. It
 may therefore contain more than the runtime wheel.
@@ -81,23 +81,25 @@ In a source checkout, `alembic upgrade head` uses the repository's
 installed-wheel user instead runs:
 
 ```bash
-python -m mnemo.persistence.postgres.migrations \
-  --database-url "$MNEMO_DATABASE_URL"
+python -m chronem.persistence.postgres.migrations \
+  --database-url "$CHRONEM_DATABASE_URL"
 ```
 
 or calls `upgrade_postgres_database(database_url)` from
-`mnemo.persistence.postgres`. Neither installed-package path reads a
+`chronem.persistence.postgres`. Neither installed-package path reads a
 repository-local `alembic.ini`.
 
 ## One-time trusted-publishing setup
 
 Publishing uses PyPI's GitHub Actions trusted publisher and short-lived OIDC
 credentials. No PyPI token or password belongs in repository secrets or files.
-Before the first release, a maintainer must:
+After Issue #39 is merged, the maintainer must first rename the GitHub
+repository from its pre-release name to `kou-wang/chronem`. Before the first
+release, a maintainer must then:
 
-1. Create or reserve the `mnemo-memory` project on PyPI, or configure a pending
+1. Create or reserve the `chronem` project on PyPI, or configure a pending
    trusted publisher for that project name.
-2. Configure the publisher for owner `kou-wang`, repository `mnemo-memory`,
+2. Configure the publisher for owner `kou-wang`, repository `chronem`,
    workflow `release.yml`, and GitHub environment `pypi`.
 3. Create the `pypi` environment in repository settings and add required
    reviewers and tag protection appropriate to the project.
