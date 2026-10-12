@@ -74,12 +74,47 @@ provider/model quality remains a separate non-CI activity; its datasets,
 execution policy, and thresholds are `TBD` and mocked outputs are not accuracy
 evidence. See [Evaluation](evaluation.md).
 
-## 10. Consumer and mobile application work
+## 10. Open-source developer experience and launch readiness
 
-Build the low-friction consumer experience on top of the reusable engine after
-the engine boundaries are stable. The established direction is iOS-first using
-React Native + Expo while preserving an Android path. Detailed application
-implementation, release planning, and rollout remain future-scoped.
+Issue #30 makes open-source adoption, technical credibility, and community
+usability the primary near-term direction. Priorities are a clear external
+README, runnable network-free and PostgreSQL examples, public package metadata,
+contributor/security entrypoints, and smoke coverage that keeps onboarding
+instructions executable. This work changes presentation and usability, not
+memory semantics.
+
+## 11. Packaging and release foundations
+
+Prepare repeatable packaging and release automation after launch-readiness is
+reviewed. Publishing policy, versioning, artifact signing, and release workflow
+remain `TBD`; Issue #30 does not publish to PyPI or add credentials.
+
+## 12. Examples, integrations, and extension points
+
+Expand provider, framework, and application examples according to demonstrated
+external-developer needs while keeping provider-independent contracts
+authoritative. Integrations must not bypass deterministic lifecycle,
+user-isolation, provenance, or grounded-recall boundaries.
+
+## 13. Community-facing provider-quality evaluation
+
+Define transparent datasets, model/provider metadata, execution policy, and
+thresholds for live quality evaluation. Keep these results separate from the
+deterministic contract gate; mocked outputs are never model-accuracy evidence.
+
+## 14. Semantic and hybrid retrieval
+
+Consider semantic/hybrid retrieval only when reusable engine use cases justify
+it. Structured and temporal recall remain the baseline and source of truth;
+technology and ranking choices are `TBD`.
+
+## 15. Consumer and mobile application work — deferred
+
+The historical direction remains a low-friction iOS-first consumer experience
+using React Native + Expo while preserving an Android path. It is explicitly
+deferred behind open-source engine adoption, packaging, examples/integrations,
+and evaluation work. Detailed implementation, release planning, and rollout
+remain future-scoped.
 
 Current implementation and review state lives in
 [Project status](project-status.md), not in this roadmap.

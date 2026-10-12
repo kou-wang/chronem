@@ -1,12 +1,12 @@
 # Project Status
 
-Last updated: 2026-10-09
+Last updated: 2026-10-12
 
 ## Current phase
 
-**Deterministic evaluation harness (Issue #28)**
+**Open-source launch readiness (Issue #30)**
 
-Working branch: `feat/evaluation-harness`
+Working branch: `feat/open-source-launch-readiness`
 
 Sprint 1 PR: **#6 — merged**
 
@@ -32,7 +32,9 @@ Recall execution orchestration PR: **#25 — merged**
 
 Grounded answer synthesis PR: **#27 — merged**
 
-Issue #28 implementation: **complete; awaiting maintainer review**
+Deterministic evaluation harness PR: **#29 — merged**
+
+Issue #30 implementation: **complete; awaiting maintainer review**
 
 ## Completed
 
@@ -240,11 +242,9 @@ Implemented:
 - minimal provider evidence payloads that exclude user ids and internal objects
 - offline provider/schema coverage and real PostgreSQL end-to-end answer coverage
 
-## In progress
-
 ### Issue #28 — Deterministic evaluation harness
 
-Implementation complete; awaiting maintainer review.
+Completed and reviewed.
 
 Implemented:
 - provider-independent typed evaluation cases, results, summaries, and metrics
@@ -256,30 +256,49 @@ Implemented:
 - explicit separation between deterministic contracts and live-provider quality
 - evaluation architecture, execution, and dataset documentation
 
+## In progress
+
+### Issue #30 — Open-source launch readiness
+
+Implementation complete; awaiting maintainer review.
+
+Implemented:
+- external-developer README and architecture overview
+- zero-network deterministic and PostgreSQL full-engine examples
+- public package metadata and typed-package marker
+- concise contribution and security entrypoints
+- example smoke coverage in the Python 3.11/3.12 quality gates
+- accurate public positioning of deterministic versus provider-quality evaluation
+- an open-source-first roadmap with consumer/mobile work retained but deferred
+
 ## Next
 
-1. Review Issue #28 and its dedicated PR
-2. Define future live-provider quality evaluation only through dedicated scope
-3. Consumer/mobile application work
+1. Review and merge Issue #30's launch-readiness PR
+2. Define packaging and release automation in dedicated scope
+3. Expand examples, integrations, and extension-point documentation
+4. Define community-facing provider-quality evaluation
+5. Consider semantic/hybrid retrieval only when reusable use cases justify it
+6. Revisit consumer/mobile application work later
 
 ## Current constraints
 
-Issue #28 adds only deterministic evaluation tooling for existing contracts and must not add:
+Issue #30 improves adoption and repository usability without adding:
 - FastAPI
 - pgvector
-- Redis
 - React Native / Expo code
-- authentication
-- billing
-- notifications
 - lifecycle semantic changes
-- live OpenAI calls in CI
-- dashboards or hosted evaluation services
 - retrieval, lifecycle, entity-resolution, or answer semantic changes
+- release credentials or PyPI publishing
+- telemetry, analytics, or monetization code
 
 ## Product direction
 
-The eventual consumer product is a fast everyday-memory app focused on:
+The primary near-term goal is adoption of the reusable open-source temporal
+memory engine by external developers. Technical credibility, runnable examples,
+packaging, integrations, and transparent evaluation take priority over consumer
+commercialization.
+
+The eventual consumer product direction remains a fast everyday-memory app focused on:
 - people and dates
 - preferences
 - parking / object locations
@@ -287,7 +306,8 @@ The eventual consumer product is a fast everyday-memory app focused on:
 - life events / maintenance
 - shopping and other wants
 
-The open-source repository is the reusable temporal Personal Memory Engine underlying that product.
+The open-source repository is the reusable temporal Personal Memory Engine
+underlying that future product, but consumer/mobile work is currently deferred.
 
 See [Product requirements](product-requirements.md), the [roadmap](roadmap.md),
 and the [development workflow](development-workflow.md) for durable context.

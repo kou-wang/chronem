@@ -5,14 +5,36 @@ build-backend = "hatchling.build"
 [project]
 name = "mnemo-memory"
 version = "0.1.0"
-description = "Temporal personal memory engine for AI applications"
+description = "Open-source temporal memory engine for AI applications"
 readme = "README.md"
 requires-python = ">=3.11"
-license = { text = "Apache-2.0" }
+license = "Apache-2.0"
 authors = [{ name = "Kou Wang" }]
+keywords = [
+  "ai",
+  "memory",
+  "temporal",
+  "lifecycle",
+  "retrieval",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: Apache Software License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Typing :: Typed",
+]
 dependencies = [
   "pydantic>=2.9,<3",
 ]
+
+[project.urls]
+Repository = "https://github.com/kou-wang/mnemo-memory"
+Issues = "https://github.com/kou-wang/mnemo-memory/issues"
+Documentation = "https://github.com/kou-wang/mnemo-memory/tree/main/docs"
 
 [project.optional-dependencies]
 openai = [
