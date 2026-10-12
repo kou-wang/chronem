@@ -319,8 +319,8 @@ Change:
 
 Reason:
 - commercial consumer demand is not yet validated, while a strong open-source
-  project has independent value through adoption, reputation, learning, and
-  portfolio impact.
+  project has independent value through adoption, technical credibility,
+  ecosystem learning, and reusable community infrastructure.
 
 ### 2026-10-12 — Release/adoption work moved ahead of more engine features
 
