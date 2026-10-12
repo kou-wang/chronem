@@ -4,13 +4,13 @@ Last updated: 2026-10-12
 
 ## Current phase
 
-**Pre-release rebrand to Chronem (Issue #39)**
+**First public release and growth baseline (Issue #34)**
 
 Strategic phase: **Phase A — First public release**
 
-Current checkpoint: **Package, distribution, and repository identity migration**
+Current checkpoint: **Post-rebrand release revalidation**
 
-Working branch: `refactor/rebrand-chronem`
+Canonical repository: `kou-wang/chronem`
 
 North Star: [Open-source plan](open-source-plan.md)
 
@@ -46,7 +46,11 @@ Open-source launch readiness PR: **#31 — merged**
 
 Packaging and release foundations PR: **#33 — merged**
 
-v0.1.0 release preparation PR: **#37 — merged; release paused for Issue #39**
+v0.1.0 release preparation PR: **#37 — merged**
+
+Chronem rebrand PR: **#40 — merged**
+
+Repository rename to `kou-wang/chronem`: **complete**
 
 ## Completed
 
@@ -297,23 +301,27 @@ Implemented:
 
 ## In progress
 
-### Issue #39 — Pre-release rebrand to Chronem
+### Issue #34 — First public release and growth baseline
 
-Rename the unreleased package, import tree, configuration surface, distribution
-artifacts, documentation, and canonical repository URLs to Chronem without
-changing memory semantics or release safety.
+The pre-release rebrand is complete. Chronem now uses:
+- brand: Chronem
+- distribution: `chronem`
+- Python import: `chronem`
+- canonical repository: `kou-wang/chronem`
+
+Release work has resumed with post-rename revalidation before trusted publishing
+or tag creation.
 
 ## Next
 
-1. Review and merge Issue #39's Chronem rebrand PR
-2. Have the maintainer rename the GitHub repository to `kou-wang/chronem`
-3. Resume Issue #34 and re-verify URLs, metadata, and trusted-publisher settings
-4. Run the release dry run against the exact merged commit
-5. Create `v0.1.0` and run a non-publishing release build
-6. Require explicit maintainer approval before PyPI publishing
-7. Verify the real public installation
-8. Record the adoption baseline in [Open-source growth log](open-source-growth.md)
-9. Perform a Launch Review and create the Phase B launch/discoverability Issue
+1. Merge the post-rebrand status synchronization PR
+2. Run a fresh release dry run against the exact merged Chronem commit
+3. Confirm GitHub `pypi` environment and PyPI Trusted Publisher for `chronem`
+4. Create `v0.1.0` and run a non-publishing release build
+5. Require explicit maintainer approval before PyPI publishing
+6. Verify the real public installation
+7. Record the adoption baseline in [Open-source growth log](open-source-growth.md)
+8. Perform a Launch Review and create the Phase B launch/discoverability Issue
 
 ## Current constraints
 
