@@ -9,19 +9,11 @@ from mnemo.evaluation.grounding import evaluate_grounding
 from mnemo.evaluation.lifecycle import evaluate_lifecycle
 from mnemo.evaluation.metrics import summarize_results
 from mnemo.evaluation.models import (
-    EvaluationDomain,
+    REQUIRED_DETERMINISTIC_DOMAINS,
     EvaluationReport,
     EvaluationResult,
 )
 from mnemo.evaluation.planning import evaluate_recall_planning
-
-_DOMAIN_ORDER = (
-    EvaluationDomain.LIFECYCLE,
-    EvaluationDomain.ENTITY_RESOLUTION,
-    EvaluationDomain.RECALL_PLANNING,
-    EvaluationDomain.STRUCTURED_RECALL,
-    EvaluationDomain.ANSWER_GROUNDING,
-)
 
 
 def build_report(results: Sequence[EvaluationResult]) -> EvaluationReport:
@@ -31,8 +23,7 @@ def build_report(results: Sequence[EvaluationResult]) -> EvaluationReport:
             domain=domain,
             results=tuple(result for result in all_results if result.domain == domain),
         )
-        for domain in _DOMAIN_ORDER
-        if any(result.domain == domain for result in all_results)
+        for domain in REQUIRED_DETERMINISTIC_DOMAINS
     )
     return EvaluationReport(summaries=summaries, results=all_results)
 

@@ -23,8 +23,11 @@ covers:
   synthesizer.
 
 These cases encode deterministic contracts, so the required pass rate is 100%.
-The command exits nonzero if any case fails and emits a concise per-domain
-summary:
+Lifecycle, entity resolution, recall planning, structured recall, and answer
+grounding must each contain at least one case and have no failures. The command
+fails closed if any required domain is missing or empty. Extraction and other
+provider/model quality remain outside this deterministic gate. The command
+emits a concise per-domain summary:
 
 ```bash
 export MNEMO_TEST_DATABASE_URL="postgresql+psycopg://USER:PASSWORD@HOST/TEST_DATABASE"

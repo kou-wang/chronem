@@ -34,6 +34,15 @@ class EvaluationDomain(StrEnum):
     ANSWER_GROUNDING = "answer_grounding"
 
 
+REQUIRED_DETERMINISTIC_DOMAINS = (
+    EvaluationDomain.LIFECYCLE,
+    EvaluationDomain.ENTITY_RESOLUTION,
+    EvaluationDomain.RECALL_PLANNING,
+    EvaluationDomain.STRUCTURED_RECALL,
+    EvaluationDomain.ANSWER_GROUNDING,
+)
+
+
 class EvaluationCase(BaseModel):
     """Stable identity shared by every typed evaluation case."""
 
@@ -195,7 +204,12 @@ class EvaluationReport(BaseModel):
 
     @property
     def passed(self) -> bool:
-        return bool(self.summaries) and all(summary.failed_count == 0 for summary in self.summaries)
+        summaries_by_domain = {summary.domain: summary for summary in self.summaries}
+        for domain in REQUIRED_DETERMINISTIC_DOMAINS:
+            summary = summaries_by_domain.get(domain)
+            if summary is None or summary.case_count == 0 or summary.failed_count != 0:
+                return False
+        return True
 
     def human_summary(self) -> str:
         lines = [

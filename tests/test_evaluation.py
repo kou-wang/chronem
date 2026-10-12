@@ -10,7 +10,9 @@ from pydantic import ValidationError
 import mnemo.evaluation.models as evaluation_models
 from mnemo.evaluation import (
     EvaluationDomain,
+    EvaluationReport,
     EvaluationResult,
+    EvaluationSummary,
     StructuredRecallEvaluationCase,
     build_report,
     classification_metrics,
@@ -25,13 +27,18 @@ from mnemo.recall import RecallMode, RecallOutcome, StructuredRecallRequest
 from mnemo.recall.service import RecallInvariantError, StructuredRecallService
 
 
-def test_core_contract_dataset_passes_completely_and_serializes() -> None:
+def test_core_contract_dataset_serializes_and_exposes_missing_postgres_domain() -> None:
     report = run_core_evaluations()
 
-    assert report.passed
-    assert evaluation_exit_code(report) == 0
+    assert not report.passed
+    assert evaluation_exit_code(report) == 1
     assert sum(summary.case_count for summary in report.summaries) == 42
-    assert all(summary.pass_rate == 1.0 for summary in report.summaries)
+    assert len(report.summaries) == 5
+    assert next(
+        summary
+        for summary in report.summaries
+        if summary.domain == EvaluationDomain.STRUCTURED_RECALL
+    ).case_count == 0
     assert report.provider_quality_evaluated is False
 
     payload = json.loads(report.model_dump_json())
@@ -39,6 +46,95 @@ def test_core_contract_dataset_passes_completely_and_serializes() -> None:
     assert payload["deterministic_contracts"] is True
     assert payload["provider_quality_evaluated"] is False
     assert len(payload["results"]) == 42
+
+
+def test_all_required_domains_populated_and_passing_exit_zero_without_extraction() -> None:
+    report = build_report(
+        tuple(
+            EvaluationResult(
+                case_id=f"passing_{domain.value}",
+                domain=domain,
+                passed=True,
+            )
+            for domain in EvaluationDomain
+            if domain != EvaluationDomain.EXTRACTION
+        )
+    )
+
+    assert report.passed
+    assert evaluation_exit_code(report) == 0
+    assert EvaluationDomain.EXTRACTION not in {
+        summary.domain for summary in report.summaries
+    }
+    assert report.provider_quality_evaluated is False
+
+
+def test_missing_required_domain_exits_nonzero() -> None:
+    report = build_report(
+        tuple(
+            EvaluationResult(
+                case_id=f"passing_{domain.value}",
+                domain=domain,
+                passed=True,
+            )
+            for domain in EvaluationDomain
+            if domain
+            not in (EvaluationDomain.EXTRACTION, EvaluationDomain.STRUCTURED_RECALL)
+        )
+    )
+
+    missing = next(
+        summary
+        for summary in report.summaries
+        if summary.domain == EvaluationDomain.STRUCTURED_RECALL
+    )
+    assert missing.case_count == 0
+    assert not report.passed
+    assert evaluation_exit_code(report) == 1
+
+
+def test_required_domain_with_explicit_zero_case_summary_exits_nonzero() -> None:
+    summaries = tuple(
+        EvaluationSummary(
+            domain=domain,
+            case_count=0 if domain == EvaluationDomain.RECALL_PLANNING else 1,
+            passed_count=0 if domain == EvaluationDomain.RECALL_PLANNING else 1,
+            failed_count=0,
+            pass_rate=0.0 if domain == EvaluationDomain.RECALL_PLANNING else 1.0,
+        )
+        for domain in EvaluationDomain
+        if domain != EvaluationDomain.EXTRACTION
+    )
+    report = EvaluationReport(summaries=summaries, results=())
+
+    assert not report.passed
+    assert evaluation_exit_code(report) == 1
+
+
+def test_required_domain_omitted_from_summaries_exits_nonzero() -> None:
+    complete = build_report(
+        tuple(
+            EvaluationResult(
+                case_id=f"passing_{domain.value}",
+                domain=domain,
+                passed=True,
+            )
+            for domain in EvaluationDomain
+            if domain != EvaluationDomain.EXTRACTION
+        )
+    )
+    report = complete.model_copy(
+        update={
+            "summaries": tuple(
+                summary
+                for summary in complete.summaries
+                if summary.domain != EvaluationDomain.ANSWER_GROUNDING
+            )
+        }
+    )
+
+    assert not report.passed
+    assert evaluation_exit_code(report) == 1
 
 
 def test_recall_planning_seed_is_packaged_as_typed_harness_cases() -> None:
@@ -89,11 +185,25 @@ def test_failed_contract_produces_diagnostic_and_nonzero_gate() -> None:
         passed=False,
         diagnostic="expected APPEND, got NOOP",
     )
-    report = build_report((failed,))
+    passing = tuple(
+        EvaluationResult(
+            case_id=f"passing_{domain.value}",
+            domain=domain,
+            passed=True,
+        )
+        for domain in EvaluationDomain
+        if domain not in (EvaluationDomain.EXTRACTION, EvaluationDomain.LIFECYCLE)
+    )
+    report = build_report((failed, *passing))
 
     assert not report.passed
     assert evaluation_exit_code(report) == 1
-    assert report.summaries[0].pass_rate == 0.0
+    lifecycle = next(
+        summary
+        for summary in report.summaries
+        if summary.domain == EvaluationDomain.LIFECYCLE
+    )
+    assert lifecycle.pass_rate == 0.0
     assert report.results[0].diagnostic == "expected APPEND, got NOOP"
 
 
