@@ -4,10 +4,6 @@ All notable changes to Mnemo will be documented in this file. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and releases follow
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-Mnemo has not yet been published to PyPI. Version `0.1.0` is the first public
-release candidate and must not be advertised as published until the release
-workflow and clean public-install verification succeed.
-
 ## [Unreleased]
 
 ## [0.1.0] - 2026-10-12
