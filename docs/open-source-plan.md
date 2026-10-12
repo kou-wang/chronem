@@ -31,9 +31,9 @@ behavior rather than by becoming another thin vector-memory wrapper.
 | Deterministic evaluation | COMPLETE | Required contract domains fail closed in CI |
 | External developer onboarding | COMPLETE | README, quickstart, runnable examples, contribution/security docs |
 | Packaging/release foundations | COMPLETE | Wheel/sdist validation, installed-wheel PostgreSQL migrations, trusted-publishing workflow |
-| Pre-release identity migration | **CURRENT** | Issue #39 — complete the Chronem rebrand before release |
-| First public release | **PAUSED** | Issue #34 resumes after the rebrand and repository rename |
-| Launch/discoverability | NEXT | Promotion assets and first deliberate public launch cycle |
+| Pre-release identity migration | COMPLETE | Chronem rebrand and repository rename completed before v0.1.0 |
+| First public release | COMPLETE | v0.1.0 published to PyPI and GitHub; clean public install verified |
+| Launch/discoverability | **CURRENT** | Issue #42 — first deliberate public launch and measurement cycle |
 | Integration-driven adoption | PLANNED | Choose one compelling integration from ecosystem/user evidence |
 | Community benchmark/provider evaluation | PLANNED | Build credibility without confusing deterministic tests with model accuracy |
 | Semantic/hybrid retrieval | CONDITIONAL | Add only when external use cases justify it |
@@ -64,13 +64,10 @@ Exit signal:
 
 ### Phase A — First public release
 
-**Status: PAUSED FOR PRE-RELEASE REBRAND**
+**Status: COMPLETE**
 
-Current execution issue:
-- **#39 — Rebrand the unreleased project to Chronem**
-
-Issue #34 resumes only after this code migration is merged and the maintainer
-renames the GitHub repository.
+Completed through Issue #34 after the pre-release Chronem rebrand and repository
+rename.
 
 Objective:
 - make Chronem a real installable public package rather than only a GitHub source
@@ -92,7 +89,10 @@ Do not add new engine features merely to make v0.1.0 look larger.
 
 ### Phase B — Launch and discoverability
 
-**Status: NEXT**
+**Status: CURRENT**
+
+Current execution issue:
+- **#42 — Launch Chronem v0.1.0 and measure discoverability**
 
 Objective:
 - turn a technically sound repository into something developers actually find,
@@ -310,6 +310,15 @@ committing to the next major technical capability.
 
 ## Direction change log
 
+### 2026-10-12 — Chronem v0.1.0 became the first verified public release
+
+Outcome:
+- `chronem==0.1.0` was published through PyPI Trusted Publishing;
+- GitHub Release `v0.1.0` was published;
+- a clean Python 3.11 environment verified the public package and packaged
+  PostgreSQL migration entrypoint;
+- the project moved from Phase A release work into Phase B launch/discoverability.
+
 ### 2026-10-12 — Mnemo renamed to Chronem before first public release
 
 Reason:
@@ -361,19 +370,16 @@ Reason:
 
 ## Current next actions
 
-1. Complete the post-rebrand status synchronization.
-2. Run a fresh release dry run against the exact merged Chronem commit.
-3. Confirm the GitHub `pypi` environment and configure the PyPI Trusted
-   Publisher for project `chronem`, repository `kou-wang/chronem`, workflow
-   `release.yml`, environment `pypi`.
-4. Create `v0.1.0` and run the release workflow with publishing disabled.
-5. Obtain explicit maintainer approval before enabling PyPI publishing.
-6. Verify the real public package installation and PostgreSQL extra.
-7. Record the first adoption baseline in
-   [Open-source growth log](open-source-growth.md).
-8. Perform a Launch Review and create the Phase B launch/discoverability Issue.
-9. After the launch cycle, inspect real feedback before selecting the first
-   major integration or new engine capability.
+1. Complete the post-release README/status/baseline synchronization.
+2. Execute Issue #42 repository presentation and launch-asset work.
+3. Select a small number of current, relevant launch channels using evidence
+   rather than posting mechanically everywhere.
+4. Run at least one deliberate public launch cycle.
+5. Measure adoption and qualitative feedback against the dated v0.1.0 baseline
+   in [Open-source growth log](open-source-growth.md).
+6. Perform the Launch Review.
+7. Choose the next major Issue from observed external evidence before selecting
+   an integration, benchmark effort, or new engine capability.
 
 ## AI / maintainer resume checklist
 
