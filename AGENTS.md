@@ -10,15 +10,18 @@ Use this source-of-truth order:
 
 1. The linked GitHub Issue: task scope and acceptance criteria.
 2. This file: shared engineering and workflow rules.
-3. [Architecture](docs/architecture.md): current boundaries and invariants.
-4. [Accepted decisions](docs/decisions/README.md): durable decisions that must
+3. [Open-source plan](docs/open-source-plan.md): strategic North Star, current
+   growth phase, direction changes, and adoption/release priorities.
+4. [Architecture](docs/architecture.md): current boundaries and invariants.
+5. [Accepted decisions](docs/decisions/README.md): durable decisions that must
    not be silently revisited.
-5. [Product requirements](docs/product-requirements.md): established product
+6. [Product requirements](docs/product-requirements.md): established product
    requirements and MVP boundaries.
-6. [Roadmap](docs/roadmap.md): phase ordering and intended outcomes.
-7. [Project status](docs/project-status.md): current implementation and review
+7. [Roadmap](docs/roadmap.md): technical/project phase ordering and intended
+   outcomes.
+8. [Project status](docs/project-status.md): current implementation and review
    state.
-8. Tool-specific entrypoints such as `.cursor/rules/*.mdc`.
+9. Tool-specific entrypoints such as `.cursor/rules/*.mdc`.
 
 Also read the current sprint specification when the Issue or project status
 links one. If these sources conflict, stop and surface the contradiction to the
@@ -110,6 +113,8 @@ Keep durable context in the repository, not only in chat:
 - add or update an ADR when an accepted architecture decision changes;
 - update `docs/product-requirements.md` only with maintainer-approved product
   requirement changes;
+- update `docs/open-source-plan.md` when the open-source strategy, growth
+  phase, milestone interpretation, or major direction changes;
 - update `docs/roadmap.md` when phase sequencing or outcomes change;
 - update `docs/project-status.md` when implementation or review state changes;
 - update tests and user/developer documentation affected by the change.
