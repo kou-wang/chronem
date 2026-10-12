@@ -8,6 +8,10 @@ Last updated: 2026-10-12
 
 Strategic phase: **Phase A — First public release**
 
+Current checkpoint: **Release-preparation PR**
+
+Working branch: `release/v0.1.0-prep`
+
 North Star: [Open-source plan](open-source-plan.md)
 
 Packaging and release foundations (Issue #32 / PR #33): **merged**
@@ -299,12 +303,14 @@ point for the launch/discoverability cycle.
 
 ## Next
 
-1. Complete the open-source North Star documentation (Issue #35)
-2. Execute Issue #34 and verify the real public v0.1.0 installation
-3. Record the first adoption baseline
-4. Perform a Launch Review
-5. Create a dedicated launch/discoverability Issue
-6. Choose integrations or new capabilities only after reviewing external signals
+1. Review and merge the v0.1.0 release-preparation PR
+2. Run the release dry run against the exact merged commit
+3. Confirm PyPI trusted-publishing and GitHub `pypi` environment configuration
+4. Create `v0.1.0` and run a non-publishing release build
+5. Require explicit maintainer approval before PyPI publishing
+6. Verify the real public installation
+7. Record the adoption baseline in [Open-source growth log](open-source-growth.md)
+8. Perform a Launch Review and create the Phase B launch/discoverability Issue
 
 ## Current constraints
 

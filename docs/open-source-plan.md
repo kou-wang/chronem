@@ -348,13 +348,16 @@ Reason:
 
 ## Current next actions
 
-1. Merge this planning/documentation PR.
-2. Execute **Issue #34** to ship and verify v0.1.0.
-3. Record the first adoption baseline.
-4. Perform a Launch Review.
-5. Create a dedicated launch/discoverability Issue based on the verified public
-   release state.
-6. After the launch cycle, inspect real feedback before selecting the first
+1. Complete the **v0.1.0 release-preparation PR** under Issue #34.
+2. Run the release dry-run workflow against the exact merged release commit.
+3. Confirm PyPI/GitHub trusted-publishing account configuration.
+4. Create `v0.1.0` and run the release workflow with publishing disabled.
+5. Obtain explicit maintainer approval before enabling PyPI publishing.
+6. Verify the real public package installation and PostgreSQL extra.
+7. Record the first adoption baseline in
+   [Open-source growth log](open-source-growth.md).
+8. Perform a Launch Review and create the Phase B launch/discoverability Issue.
+9. After the launch cycle, inspect real feedback before selecting the first
    major integration or new engine capability.
 
 ## AI / maintainer resume checklist
@@ -383,6 +386,7 @@ When resuming Mnemo work:
 - **product-requirements.md** — established product requirements.
 - **roadmap.md** — technical/project phase ordering.
 - **project-status.md** — what is currently implemented/in progress.
+- **open-source-growth.md** — dated adoption baselines and launch-review evidence.
 
 If a task-specific Issue conflicts with an accepted architecture decision or this
 strategic direction, surface the conflict rather than silently choosing one.

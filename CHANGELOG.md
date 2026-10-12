@@ -4,24 +4,42 @@ All notable changes to Mnemo will be documented in this file. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and releases follow
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-Mnemo has not yet been published to PyPI. The repository version remains
-`0.1.0` until a separate release decision is approved.
-
 ## [Unreleased]
+
+## [0.1.0] - 2026-10-12
 
 ### Added
 
-- Repeatable wheel and source-distribution builds with metadata, content, and
-  isolated installed-wheel validation.
-- Manual release dry-run and trusted-publishing workflows.
-- External-developer README, deterministic and PostgreSQL examples, contributor
-  guidance, and security reporting policy.
-- Deterministic lifecycle, entity-resolution, recall-planning fixture,
-  PostgreSQL structured-recall, and grounded-answer contract evaluation.
+- Typed temporal memory model for facts, preferences, current state, events, and
+  intents.
+- Deterministic lifecycle behavior with no-op deduplication, current-state
+  supersession, retained history, intent transitions, and source provenance.
+- Conservative, user-scoped entity resolution with explicit matched,
+  unmatched, and ambiguous outcomes.
+- PostgreSQL persistence, structured/temporal queries, and packaged Alembic
+  migrations that work from an installed wheel.
+- Provider-independent ingestion, recall planning, recall orchestration, and
+  grounded-answer interfaces.
+- Optional OpenAI Structured Outputs adapters for extraction, recall planning,
+  and answer synthesis.
+- Grounded answer citations, deterministic abstention, and fail-closed
+  cross-user/invariant checks.
+- Deterministic contract evaluation across lifecycle, entity resolution,
+  recall-planning fixtures, real PostgreSQL structured recall, and answer
+  grounding.
+- External-developer README, zero-network lifecycle example, PostgreSQL
+  full-engine example, contribution/security guidance, and typed-package marker.
+- Repeatable wheel and source-distribution validation, installed-wheel core and
+  PostgreSQL migration smoke tests, release dry-run workflow, and PyPI trusted
+  publishing foundation.
 
 ### Security
 
-- Fail-closed user isolation, conservative entity resolution, provenance
-  preservation, and validated grounded-answer citations.
+- User isolation is enforced as a domain invariant rather than relying only on
+  application-layer filtering.
+- Grounded answers reject citations outside supplied recall evidence.
+- Release publishing is designed for GitHub Actions OIDC trusted publishing
+  without a static PyPI credential in the repository.
 
-[Unreleased]: https://github.com/kou-wang/mnemo-memory/compare/main...HEAD
+[Unreleased]: https://github.com/kou-wang/mnemo-memory/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/kou-wang/mnemo-memory/releases/tag/v0.1.0
