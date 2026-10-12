@@ -25,6 +25,9 @@ version, and Git tag must match.
 
 From a clean checkout with `.[dev]` installed:
 
+Set `MNEMO_DISTRIBUTION_DATABASE_URL` to a fresh, disposable PostgreSQL database
+that the smoke test may migrate and write to.
+
 ```bash
 repository_root="$PWD"
 artifact_dir="$(mktemp -d)"
@@ -35,18 +38,56 @@ python -m twine check --strict "$artifact_dir"/*
 python scripts/validate_distribution.py "$artifact_dir"
 
 python -m venv "$smoke_dir"
-"$smoke_dir/bin/python" -m pip install "$artifact_dir"/*.whl
+wheel_paths=("$artifact_dir"/*.whl)
+"$smoke_dir/bin/python" -m pip install "${wheel_paths[0]}[postgres]"
+cp scripts/smoke_installed_wheel.py "$smoke_dir/"
+cp scripts/smoke_installed_wheel_postgres.py "$smoke_dir/"
+cp examples/deterministic_lifecycle.py "$smoke_dir/"
 (
   cd /tmp
-  "$smoke_dir/bin/python" "$repository_root/scripts/smoke_installed_wheel.py"
-  "$smoke_dir/bin/python" "$repository_root/examples/deterministic_lifecycle.py"
+  "$smoke_dir/bin/python" "$smoke_dir/smoke_installed_wheel.py"
+  "$smoke_dir/bin/python" "$smoke_dir/deterministic_lifecycle.py"
+  "$smoke_dir/bin/python" "$smoke_dir/smoke_installed_wheel_postgres.py" \
+    --database-url "$MNEMO_DISTRIBUTION_DATABASE_URL" \
+    --source-root "$repository_root"
 )
 ```
 
 This proves that the wheel and sdist build, metadata renders cleanly, required
 package data is present, and the wheel—not the editable checkout—imports and
-runs in a fresh environment. The manual **Release dry run** GitHub workflow runs
-the same checks for a selected ref and uploads the artifacts without publishing.
+runs in a fresh environment. It also proves that packaged migrations initialize
+a fresh PostgreSQL database and that an installed repository adapter works. The
+manual **Release dry run** GitHub workflow runs the same checks for a selected
+ref and uploads the artifacts without publishing.
+
+## Source-distribution contents
+
+Mnemo's sdist intentionally includes source-facing project material useful for
+inspection and downstream validation: source code, tests, documentation,
+examples, scripts, GitHub automation, and contributor/agent configuration. It
+may therefore contain more than the runtime wheel.
+
+The distribution validator rejects local or generated material that is not
+intentional source content: environment files, virtual environments, Python and
+tool caches, coverage output, nested build/distribution output, common secret
+or credential files, private-key formats, and editor/local-machine artifacts.
+Required package resources—including all PostgreSQL migration files—must be
+present in both the wheel and sdist.
+
+## PostgreSQL migration paths
+
+In a source checkout, `alembic upgrade head` uses the repository's
+`alembic.ini`, which points into the packaged PostgreSQL adapter tree. An
+installed-wheel user instead runs:
+
+```bash
+python -m mnemo.persistence.postgres.migrations \
+  --database-url "$MNEMO_DATABASE_URL"
+```
+
+or calls `upgrade_postgres_database(database_url)` from
+`mnemo.persistence.postgres`. Neither installed-package path reads a
+repository-local `alembic.ini`.
 
 ## One-time trusted-publishing setup
 

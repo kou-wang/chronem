@@ -7,13 +7,73 @@ import email
 import tarfile
 import tomllib
 import zipfile
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 ROOT = Path(__file__).parents[1]
 REQUIRED_PACKAGE_FILES = (
     "mnemo/py.typed",
     "mnemo/evaluation/data/recall_planning.json",
+    "mnemo/persistence/postgres/migration.py",
+    "mnemo/persistence/postgres/migrations/__init__.py",
+    "mnemo/persistence/postgres/migrations/__main__.py",
+    "mnemo/persistence/postgres/migrations/env.py",
+    "mnemo/persistence/postgres/migrations/script.py.mako",
+    "mnemo/persistence/postgres/migrations/versions/__init__.py",
+    "mnemo/persistence/postgres/migrations/versions/20261008_0001_initial_postgres.py",
+    "mnemo/persistence/postgres/migrations/versions/20261009_0002_structured_recall_index.py",
 )
+FORBIDDEN_SDIST_DIRECTORIES = {
+    ".git",
+    ".idea",
+    ".mypy_cache",
+    ".nox",
+    ".pytest_cache",
+    ".ruff_cache",
+    ".tox",
+    ".venv",
+    ".vscode",
+    "__pycache__",
+    "build",
+    "dist",
+    "htmlcov",
+    "venv",
+}
+FORBIDDEN_SDIST_FILENAMES = {
+    ".DS_Store",
+    ".env",
+    "coverage.xml",
+    "credentials.json",
+    "service-account.json",
+}
+FORBIDDEN_SDIST_SUFFIXES = {
+    ".key",
+    ".p12",
+    ".pem",
+    ".pfx",
+    ".pyc",
+    ".pyo",
+    ".swo",
+    ".swp",
+}
+ALLOWED_SDIST_TOP_LEVEL = {
+    ".cursor",
+    ".gitignore",
+    ".github",
+    "AGENTS.md",
+    "CHANGELOG.md",
+    "CONTRIBUTING.md",
+    "LICENSE",
+    "PKG-INFO",
+    "README.md",
+    "SECURITY.md",
+    "alembic.ini",
+    "docs",
+    "examples",
+    "pyproject.toml",
+    "scripts",
+    "src",
+    "tests",
+}
 
 
 def _project_version() -> str:
@@ -76,6 +136,31 @@ def _validate_sdist(sdist: Path, *, version: str) -> None:
     missing = required - names
     if missing:
         raise ValueError(f"sdist is missing required files: {sorted(missing)}")
+
+    unexpected: list[str] = []
+    for name in names:
+        if not name.startswith(prefix):
+            unexpected.append(name)
+            continue
+        relative = PurePosixPath(name.removeprefix(prefix))
+        filename = relative.name
+        if (
+            not relative.parts
+            or relative.parts[0] not in ALLOWED_SDIST_TOP_LEVEL
+            or ".." in relative.parts
+            or FORBIDDEN_SDIST_DIRECTORIES.intersection(relative.parts)
+            or filename in FORBIDDEN_SDIST_FILENAMES
+            or filename.startswith(".env.")
+            or filename == ".coverage"
+            or filename.startswith(".coverage.")
+            or filename.endswith("~")
+            or relative.suffix.lower() in FORBIDDEN_SDIST_SUFFIXES
+        ):
+            unexpected.append(name)
+    if unexpected:
+        raise ValueError(
+            f"sdist contains forbidden local/build/secret artifacts: {sorted(unexpected)}"
+        )
 
 
 def validate(directory: Path) -> tuple[Path, Path]:

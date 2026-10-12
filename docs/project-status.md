@@ -280,7 +280,8 @@ Implementation complete; awaiting maintainer review.
 Implemented:
 - wheel and source-distribution builds using Hatchling
 - strict metadata and required packaged-file validation
-- isolated installed-wheel import, resource, public-API, and example smoke tests
+- isolated installed-wheel import, resource, public-API, example, and packaged
+  PostgreSQL migration/repository smoke tests
 - PR/main distribution CI plus a manual artifact-only release dry run
 - a tag-validated, manual release workflow using PyPI trusted publishing
 - a pre-1.0 versioning policy, changelog, and maintainer release checklist

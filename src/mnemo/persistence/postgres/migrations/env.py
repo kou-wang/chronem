@@ -20,9 +20,11 @@ target_metadata = Base.metadata
 
 def _configuration() -> dict[str, str]:
     section = config.get_section(config.config_ini_section) or {}
-    database_url = os.environ.get("MNEMO_DATABASE_URL")
+    database_url = config.attributes.get("database_url") or os.environ.get(
+        "MNEMO_DATABASE_URL"
+    )
     if database_url:
-        section["sqlalchemy.url"] = database_url
+        section["sqlalchemy.url"] = str(database_url)
     return section
 
 

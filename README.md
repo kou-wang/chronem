@@ -108,6 +108,21 @@ python examples/postgres_full_engine.py
 docker stop mnemo-postgres
 ```
 
+That is the **source-checkout** workflow: the repository's `alembic.ini` points
+to the same migrations packaged with the PostgreSQL adapter. From an installed
+wheel, no repository-local Alembic configuration is needed:
+
+```bash
+python -m pip install "path/to/mnemo_memory-0.1.0-py3-none-any.whl[postgres]"
+python -m mnemo.persistence.postgres.migrations \
+  --database-url "$MNEMO_DATABASE_URL"
+```
+
+Applications may instead call the public
+`mnemo.persistence.postgres.upgrade_postgres_database(database_url)` helper.
+Both installed-package paths locate the migration environment and version
+scripts inside Mnemo's wheel.
+
 The final lines show an evidence-backed answer with one validated citation and
 the retained `A1 (SUPERSEDED) -> B7 (ACTIVE)` history.
 
@@ -148,7 +163,9 @@ See [Evaluation](docs/evaluation.md) for the exact scope and command.
 CI builds both a wheel and source distribution, validates their metadata and
 required package data, installs the wheel into a fresh virtual environment, and
 runs the public lifecycle smoke test plus the zero-network example from that
-installed wheel. This validates release artifacts without publishing them.
+installed wheel. It also installs the wheel's PostgreSQL extra, migrates a fresh
+database using only packaged resources, and exercises a PostgreSQL repository.
+This validates release artifacts without publishing them.
 
 Public releases are intentional maintainer actions using version tags and PyPI
 trusted publishing; no static package-index credential is stored in the

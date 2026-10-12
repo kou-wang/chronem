@@ -26,9 +26,16 @@ runs:
         smoke_dir="$(mktemp -d "$RUNNER_TEMP/mnemo-wheel-smoke.XXXXXX")"
         python -m venv "$smoke_dir"
         "$smoke_dir/bin/python" -m pip install --upgrade pip
-        "$smoke_dir/bin/python" -m pip install dist/*.whl
+        wheels=(dist/*.whl)
+        "$smoke_dir/bin/python" -m pip install "${wheels[0]}[postgres]"
+        cp scripts/smoke_installed_wheel.py "$smoke_dir/"
+        cp scripts/smoke_installed_wheel_postgres.py "$smoke_dir/"
+        cp examples/deterministic_lifecycle.py "$smoke_dir/"
         (
           cd "$RUNNER_TEMP"
-          "$smoke_dir/bin/python" "$GITHUB_WORKSPACE/scripts/smoke_installed_wheel.py"
-          "$smoke_dir/bin/python" "$GITHUB_WORKSPACE/examples/deterministic_lifecycle.py"
+          "$smoke_dir/bin/python" "$smoke_dir/smoke_installed_wheel.py"
+          "$smoke_dir/bin/python" "$smoke_dir/deterministic_lifecycle.py"
+          "$smoke_dir/bin/python" "$smoke_dir/smoke_installed_wheel_postgres.py" \
+            --database-url "$MNEMO_DISTRIBUTION_DATABASE_URL" \
+            --source-root "$GITHUB_WORKSPACE"
         )

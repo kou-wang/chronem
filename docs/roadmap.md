@@ -86,11 +86,12 @@ memory semantics.
 ## 11. Packaging and release foundations
 
 Issue #32 establishes repeatable wheel and sdist builds, metadata and packaged-
-data checks, isolated installed-wheel smoke coverage, pre-1.0 versioning and
-changelog policy, manual release dry runs, and an intentional release workflow
-designed for PyPI trusted publishing. Publishing still requires explicit
-maintainer action plus repository/PyPI configuration; no static credential or
-automatic version bump belongs in the repository.
+data checks, package-contained PostgreSQL migrations, isolated installed-wheel
+core and database smoke coverage, pre-1.0 versioning and changelog policy,
+manual release dry runs, and an intentional release workflow designed for PyPI
+trusted publishing. Publishing still requires explicit maintainer action plus
+repository/PyPI configuration; no static credential or automatic version bump
+belongs in the repository.
 
 ## 12. Examples, integrations, and extension points
 

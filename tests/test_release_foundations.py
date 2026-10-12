@@ -3,6 +3,10 @@ from __future__ import annotations
 import tomllib
 from pathlib import Path
 
+import pytest
+
+from mnemo.persistence.postgres import upgrade_postgres_database
+
 ROOT = Path(__file__).parents[1]
 
 
@@ -38,3 +42,18 @@ def test_version_stays_pre_release_and_readme_does_not_claim_pypi_availability()
 
     assert version == "0.1.0"
     assert "Mnemo is not published on PyPI yet" in readme
+
+
+def test_distribution_action_tests_packaged_postgres_migrations() -> None:
+    action = (
+        ROOT / ".github" / "actions" / "validate-distribution" / "action.yml"
+    ).read_text(encoding="utf-8")
+
+    assert '"${wheels[0]}[postgres]"' in action
+    assert "smoke_installed_wheel_postgres.py" in action
+    assert "MNEMO_DISTRIBUTION_DATABASE_URL" in action
+
+
+def test_postgres_migration_helper_rejects_other_databases() -> None:
+    with pytest.raises(ValueError, match="require a PostgreSQL"):
+        upgrade_postgres_database("sqlite+pysqlite:///:memory:")
