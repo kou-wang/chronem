@@ -4,9 +4,13 @@ Last updated: 2026-10-12
 
 ## Current phase
 
-**Packaging and release foundations (Issue #32)**
+**First public release and growth baseline (Issue #34)**
 
-Working branch: `feat/release-foundations`
+Strategic phase: **Phase A — First public release**
+
+North Star: [Open-source plan](open-source-plan.md)
+
+Packaging and release foundations (Issue #32 / PR #33): **merged**
 
 Sprint 1 PR: **#6 — merged**
 
@@ -36,7 +40,7 @@ Deterministic evaluation harness PR: **#29 — merged**
 
 Open-source launch readiness PR: **#31 — merged**
 
-Issue #32 implementation: **complete; awaiting maintainer review**
+Packaging and release foundations PR: **#33 — merged**
 
 ## Completed
 
@@ -271,11 +275,9 @@ Implemented:
 - accurate public positioning of deterministic versus provider-quality evaluation
 - an open-source-first roadmap with consumer/mobile work retained but deferred
 
-## In progress
-
 ### Issue #32 — Packaging and release foundations
 
-Implementation complete; awaiting maintainer review.
+Completed and reviewed.
 
 Implemented:
 - wheel and source-distribution builds using Hatchling
@@ -287,24 +289,35 @@ Implemented:
 - a pre-1.0 versioning policy, changelog, and maintainer release checklist
 - accurate source-install and unpublished-package documentation
 
+## In progress
+
+### Issue #34 — First public release and growth baseline
+
+Prepare and verify the first public `v0.1.0` release, configure trusted
+publishing, record the initial adoption baseline, and establish the measurement
+point for the launch/discoverability cycle.
+
 ## Next
 
-1. Review and merge Issue #32's release-foundations PR
-2. Configure repository/PyPI trusted publishing before an intentional release
-3. Expand examples, integrations, and extension-point documentation
-4. Define community-facing provider-quality evaluation
-5. Consider semantic/hybrid retrieval only when reusable use cases justify it
-6. Revisit consumer/mobile application work later
+1. Complete the open-source North Star documentation (Issue #35)
+2. Execute Issue #34 and verify the real public v0.1.0 installation
+3. Record the first adoption baseline
+4. Perform a Launch Review
+5. Create a dedicated launch/discoverability Issue
+6. Choose integrations or new capabilities only after reviewing external signals
 
 ## Current constraints
 
-Issue #32 improves distribution reliability without adding:
+The current strategic phase prioritizes release, adoption, and community
+learning over additional engine breadth. Do not add major retrieval/product
+capabilities merely because they are present on the long-term roadmap.
+
+Current release/growth work does not add:
 - FastAPI
-- pgvector
+- pgvector / semantic retrieval
 - React Native / Expo code
 - lifecycle semantic changes
-- retrieval, lifecycle, entity-resolution, or answer semantic changes
-- a published release, static package-index credentials, or automatic version bumps
+- static package-index credentials
 - telemetry, analytics, or monetization code
 
 ## Product direction
