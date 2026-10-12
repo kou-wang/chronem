@@ -1,8 +1,10 @@
 # Roadmap
 
-This roadmap records sequence and intended outcomes. Detailed implementation
-belongs in GitHub Issues and accepted architecture choices belong under
-[decisions](decisions/README.md).
+This roadmap records technical/project sequence and intended outcomes. The
+[Open-source plan](open-source-plan.md) is the strategic North Star for adoption,
+release, promotion, milestone interpretation, and major direction changes.
+Detailed implementation belongs in GitHub Issues and accepted architecture
+choices belong under [decisions](decisions/README.md).
 
 ## 1. Sprint 1 — complete
 
