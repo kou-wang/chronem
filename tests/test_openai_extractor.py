@@ -11,14 +11,14 @@ from openai import OpenAI, OpenAIError
 from openai.lib._pydantic import to_strict_json_schema
 from pydantic import ValidationError
 
-from mnemo import CandidateMemory, Capture, EntityType, MemoryKind, SourceType
-from mnemo.providers.openai import (
+from chronem import CandidateMemory, Capture, EntityType, MemoryKind, SourceType
+from chronem.providers.openai import (
     OpenAIExtractor,
     OpenAIProviderError,
     OpenAIResponseError,
 )
-from mnemo.providers.openai.prompt import EXTRACTION_INSTRUCTIONS
-from mnemo.providers.openai.schemas import OpenAIExtractedCandidate, OpenAIExtractionBatch
+from chronem.providers.openai.prompt import EXTRACTION_INSTRUCTIONS
+from chronem.providers.openai.schemas import OpenAIExtractedCandidate, OpenAIExtractionBatch
 
 
 @dataclass
@@ -161,7 +161,7 @@ def test_maps_structured_output_exactly_to_candidate_memory() -> None:
             valid_until=valid_until,
         ),
     )
-    assert result[0].__class__.__module__ == "mnemo.models.candidate"
+    assert result[0].__class__.__module__ == "chronem.models.candidate"
     assert not hasattr(result[0], "subject_entity_id")
     assert not hasattr(result[0], "object_entity_id")
     assert not any(

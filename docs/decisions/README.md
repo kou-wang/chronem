@@ -10,7 +10,7 @@ changing an accepted decision.
 
 **Status:** Accepted
 
-Mnemo uses:
+Chronem uses:
 - FACT
 - PREFERENCE
 - CURRENT_STATE
@@ -85,7 +85,7 @@ Recall should prefer:
 3. aggregation
 4. semantic/hybrid retrieval
 
-Mnemo is not an everything-through-vector-search system.
+Chronem is not an everything-through-vector-search system.
 
 ## ADR-008 — Preserve provenance
 

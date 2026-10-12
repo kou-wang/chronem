@@ -1,6 +1,6 @@
 # Evaluation
 
-Mnemo separates deterministic contract evaluation from provider/model quality
+Chronem separates deterministic contract evaluation from provider/model quality
 evaluation. They answer different questions and must not be reported as the
 same result.
 
@@ -30,7 +30,7 @@ provider/model quality remain outside this deterministic gate. The command
 emits a concise per-domain summary:
 
 ```bash
-export MNEMO_TEST_DATABASE_URL="postgresql+psycopg://USER:PASSWORD@HOST/TEST_DATABASE"
+export CHRONEM_TEST_DATABASE_URL="postgresql+psycopg://USER:PASSWORD@HOST/TEST_DATABASE"
 python scripts/run_deterministic_evaluation.py
 ```
 
@@ -49,7 +49,7 @@ those metrics are meaningful. Empty denominators produce `0.0` explicitly.
 ## Recall-planning fixture
 
 The canonical recall-planning labels live in
-`mnemo.evaluation.data/recall_planning.json` and are loaded as typed evaluation
+`chronem.evaluation.data/recall_planning.json` and are loaded as typed evaluation
 cases. This promotes the earlier test seed into the reusable harness and keeps
 one canonical copy.
 
@@ -63,7 +63,7 @@ contract behavior, not real model accuracy.
 Live extraction and planning quality must be evaluated separately with an
 explicit provider, model version, prompt version, dataset version, and run
 timestamp. Such a run may use typed extraction/planning cases and classification
-metrics from `mnemo.evaluation`, but it is not part of CI, must never contain
+metrics from `chronem.evaluation`, but it is not part of CI, must never contain
 real personal data, and must not be described as deterministic.
 
 The report records `provider_quality_evaluated=false`; its human summary prints
@@ -91,6 +91,6 @@ Add a stable typed case when a deterministic contract changes or a regression
 is discovered. Keep fixtures synthetic, timezone-aware, user-scoped, and
 provenance-bearing. PostgreSQL recall cases belong in the command's seeded
 dataset; network-free lifecycle, entity, planning-fixture, and grounding cases
-belong in their respective `mnemo.evaluation` modules. A contract change still
+belong in their respective `chronem.evaluation` modules. A contract change still
 requires the normal architecture/decision review; changing an expected value is
 not a way to bypass a failing invariant.

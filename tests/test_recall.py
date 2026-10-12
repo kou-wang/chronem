@@ -10,12 +10,12 @@ from uuid import UUID
 import pytest
 from pydantic import ValidationError
 
-from mnemo.interfaces.entities import EntityResolution, EntityResolutionOutcome
-from mnemo.interfaces.queries import MemoryQuery, MemoryQueryOrder
-from mnemo.models.entity import Entity, EntityType
-from mnemo.models.memory import Memory
-from mnemo.models.types import MemoryKind, MemoryStatus
-from mnemo.recall import (
+from chronem.interfaces.entities import EntityResolution, EntityResolutionOutcome
+from chronem.interfaces.queries import MemoryQuery, MemoryQueryOrder
+from chronem.models.entity import Entity, EntityType
+from chronem.models.memory import Memory
+from chronem.models.types import MemoryKind, MemoryStatus
+from chronem.recall import (
     RecallInvariantError,
     RecallMode,
     RecallOutcome,

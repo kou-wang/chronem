@@ -1,4 +1,4 @@
-"""Migrate and use PostgreSQL through an isolated installed Mnemo wheel."""
+"""Migrate and use PostgreSQL through an isolated installed Chronem wheel."""
 
 from __future__ import annotations
 
@@ -24,18 +24,18 @@ def main() -> None:
     if overlap:
         raise RuntimeError(f"source checkout is present on sys.path: {sorted(overlap)}")
 
-    import mnemo
-    from mnemo import Entity, EntityType
-    from mnemo.persistence.postgres import (
+    import chronem
+    from chronem import Entity, EntityType
+    from chronem.persistence.postgres import (
         PostgresEntityRepository,
         create_postgres_engine,
         create_session_factory,
         upgrade_postgres_database,
     )
 
-    installed_module = Path(mnemo.__file__).resolve()
+    installed_module = Path(chronem.__file__).resolve()
     if installed_module.is_relative_to(source_root):
-        raise RuntimeError(f"mnemo imported from source checkout: {installed_module}")
+        raise RuntimeError(f"chronem imported from source checkout: {installed_module}")
 
     upgrade_postgres_database(args.database_url)
     engine = create_postgres_engine(args.database_url)

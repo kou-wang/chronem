@@ -3,7 +3,7 @@ requires = ["hatchling>=1.25,<1.32"]
 build-backend = "hatchling.build"
 
 [project]
-name = "mnemo-memory"
+name = "chronem"
 version = "0.1.0"
 description = "Open-source temporal memory engine for AI applications"
 readme = "README.md"
@@ -32,9 +32,9 @@ dependencies = [
 ]
 
 [project.urls]
-Repository = "https://github.com/kou-wang/mnemo-memory"
-Issues = "https://github.com/kou-wang/mnemo-memory/issues"
-Documentation = "https://github.com/kou-wang/mnemo-memory/tree/main/docs"
+Repository = "https://github.com/kou-wang/chronem"
+Issues = "https://github.com/kou-wang/chronem/issues"
+Documentation = "https://github.com/kou-wang/chronem/tree/main/docs"
 
 [project.optional-dependencies]
 openai = [
@@ -59,7 +59,7 @@ dev = [
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/mnemo"]
+packages = ["src/chronem"]
 
 [tool.hatch.build.targets.sdist]
 include = [
@@ -98,4 +98,4 @@ select = ["E", "F", "I", "UP", "B"]
 [tool.mypy]
 python_version = "3.11"
 strict = true
-packages = ["mnemo"]
+packages = ["chronem"]

@@ -11,9 +11,9 @@ from datetime import UTC, datetime
 from typing import Any
 from uuid import UUID
 
-from mnemo.lifecycle.engine import LifecycleAction
-from mnemo.models.memory import Memory
-from mnemo.models.types import MemoryKind, MemoryStatus
+from chronem.lifecycle.engine import LifecycleAction
+from chronem.models.memory import Memory
+from chronem.models.types import MemoryKind, MemoryStatus
 from tests.scenarios.models import Scenario, ScenarioStep, StatusTransition
 
 USER_ID = "canonical-user"

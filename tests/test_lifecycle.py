@@ -13,13 +13,13 @@ from uuid import UUID, uuid4
 
 import pytest
 
-from mnemo.lifecycle.engine import (
+from chronem.lifecycle.engine import (
     LifecycleAction,
     LifecycleEngine,
     LifecycleInvariantError,
 )
-from mnemo.models.memory import Memory
-from mnemo.models.types import MemoryKind, MemoryStatus
+from chronem.models.memory import Memory
+from chronem.models.types import MemoryKind, MemoryStatus
 
 
 def make_memory(

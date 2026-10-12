@@ -6,9 +6,9 @@ from dataclasses import dataclass
 from datetime import datetime
 from uuid import UUID
 
-from mnemo.lifecycle.engine import LifecycleAction
-from mnemo.models.memory import Memory
-from mnemo.models.types import MemoryStatus
+from chronem.lifecycle.engine import LifecycleAction
+from chronem.models.memory import Memory
+from chronem.models.types import MemoryStatus
 
 
 @dataclass(frozen=True)

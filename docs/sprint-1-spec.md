@@ -57,7 +57,7 @@ CI must run:
 ```bash
 ruff check .
 mypy src
-pytest --cov=mnemo
+pytest --cov=chronem
 ```
 
 Initial target: >= 90% coverage for lifecycle code.

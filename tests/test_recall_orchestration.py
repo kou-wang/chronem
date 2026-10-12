@@ -10,8 +10,8 @@ from uuid import UUID
 
 import pytest
 
-import mnemo.recall.orchestration as orchestration_module
-from mnemo import (
+import chronem.recall.orchestration as orchestration_module
+from chronem import (
     EntityType,
     Memory,
     MemoryKind,
@@ -27,7 +27,7 @@ from mnemo import (
     StructuredRecallRequest,
     StructuredRecallResult,
 )
-from mnemo.recall.service import RecallInvariantError, StructuredRecallService
+from chronem.recall.service import RecallInvariantError, StructuredRecallService
 
 NOW = datetime(2026, 10, 9, 20, tzinfo=UTC)
 USER_ID = "orchestration-user"
@@ -425,5 +425,5 @@ def test_result_and_orchestration_module_have_no_provider_or_persistence_leakage
         type(value).__module__.startswith(("openai", "sqlalchemy"))
         for value in (result, *result.executions, *result.memories)
     )
-    for forbidden in ("mnemo.providers", "mnemo.persistence", "sqlalchemy", "openai"):
+    for forbidden in ("chronem.providers", "chronem.persistence", "sqlalchemy", "openai"):
         assert forbidden not in source

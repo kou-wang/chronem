@@ -7,7 +7,7 @@ sequence in the [roadmap](roadmap.md).
 
 ## Boundary
 
-Mnemo separates probabilistic interpretation from deterministic memory management.
+Chronem separates probabilistic interpretation from deterministic memory management.
 
 ```text
 Text / transcribed voice
@@ -74,7 +74,7 @@ entity creation; candidates do not contain persisted entity identifiers.
 
 `OpenAIExtractor` is the first concrete adapter behind this boundary. All SDK,
 Responses API, prompt, and provider response-schema details live under
-`mnemo.providers.openai`; the domain models, lifecycle engine, and
+`chronem.providers.openai`; the domain models, lifecycle engine, and
 provider-independent interfaces do not import OpenAI types. The SDK is an
 optional package extra. The adapter uses `responses.parse()` with a strict
 provider-local Pydantic envelope, then maps the parsed DTOs into
@@ -306,7 +306,7 @@ scheduler or forcing existing models to depend on a clock.
 
 ### Evaluation
 
-`mnemo.evaluation` defines provider-independent typed cases, results, summaries,
+`chronem.evaluation` defines provider-independent typed cases, results, summaries,
 and classification metrics. Deterministic evaluators exercise lifecycle, entity
 resolution, the recall-planning fixture contract, structured/temporal recall,
 and grounded-answer invariants. Retrieval evaluation uses the real PostgreSQL

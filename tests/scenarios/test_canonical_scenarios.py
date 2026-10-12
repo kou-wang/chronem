@@ -6,9 +6,9 @@ from uuid import UUID
 
 import pytest
 
-from mnemo.lifecycle.engine import LifecycleAction, LifecycleEngine, LifecycleInvariantError
-from mnemo.models.memory import Memory
-from mnemo.models.types import MemoryKind, MemoryStatus
+from chronem.lifecycle.engine import LifecycleAction, LifecycleEngine, LifecycleInvariantError
+from chronem.models.memory import Memory
+from chronem.models.types import MemoryKind, MemoryStatus
 from tests.scenarios.canonical import (
     BIRTHDAY_FACT,
     CANONICAL_SCENARIOS,

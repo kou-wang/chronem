@@ -12,32 +12,32 @@ import pytest
 from sqlalchemy import Engine, text
 from sqlalchemy.orm import Session, sessionmaker
 
-from mnemo.answers import (
+from chronem.answers import (
     NO_EVIDENCE_MESSAGE,
     RecallAnswerOutcome,
     RecallAnswerService,
     SynthesizedAnswer,
 )
-from mnemo.entities import DeterministicEntityResolver
-from mnemo.ingestion import CandidateIngestionOutcome, IngestionService
-from mnemo.lifecycle.engine import LifecycleEngine
-from mnemo.models.candidate import CandidateMemory
-from mnemo.models.capture import Capture, SourceType
-from mnemo.models.entity import Entity, EntityType
-from mnemo.models.memory import Memory
-from mnemo.models.types import MemoryKind, MemoryStatus
-from mnemo.persistence.postgres.migration import (
+from chronem.entities import DeterministicEntityResolver
+from chronem.ingestion import CandidateIngestionOutcome, IngestionService
+from chronem.lifecycle.engine import LifecycleEngine
+from chronem.models.candidate import CandidateMemory
+from chronem.models.capture import Capture, SourceType
+from chronem.models.entity import Entity, EntityType
+from chronem.models.memory import Memory
+from chronem.models.types import MemoryKind, MemoryStatus
+from chronem.persistence.postgres.migration import (
     _downgrade_postgres_database,
     upgrade_postgres_database,
 )
-from mnemo.persistence.postgres.repositories import (
+from chronem.persistence.postgres.repositories import (
     PostgresCaptureRepository,
     PostgresEntityRepository,
     PostgresMemoryQueryRepository,
     PostgresMemoryRepository,
 )
-from mnemo.persistence.postgres.session import create_postgres_engine, create_session_factory
-from mnemo.recall import (
+from chronem.persistence.postgres.session import create_postgres_engine, create_session_factory
+from chronem.recall import (
     RecallExecutionOutcome,
     RecallMode,
     RecallOrchestrationService,
@@ -61,9 +61,9 @@ def _id(number: int) -> UUID:
 
 @pytest.fixture(scope="session")
 def ingestion_postgres_engine() -> Iterator[Engine]:
-    database_url = os.environ.get("MNEMO_TEST_DATABASE_URL")
+    database_url = os.environ.get("CHRONEM_TEST_DATABASE_URL")
     if not database_url:
-        pytest.skip("MNEMO_TEST_DATABASE_URL is required for PostgreSQL integration tests")
+        pytest.skip("CHRONEM_TEST_DATABASE_URL is required for PostgreSQL integration tests")
 
     upgrade_postgres_database(database_url)
 

@@ -6,10 +6,10 @@ from uuid import UUID
 
 import pytest
 
-from mnemo.entities import DeterministicEntityResolver, normalize_entity_name
-from mnemo.interfaces.entities import EntityResolutionOutcome, EntityResolver
-from mnemo.interfaces.repositories import EntityRepository, RepositoryInvariantError
-from mnemo.models.entity import Entity, EntityType
+from chronem.entities import DeterministicEntityResolver, normalize_entity_name
+from chronem.interfaces.entities import EntityResolutionOutcome, EntityResolver
+from chronem.interfaces.repositories import EntityRepository, RepositoryInvariantError
+from chronem.models.entity import Entity, EntityType
 
 USER_ID = "user-1"
 OTHER_USER_ID = "user-2"

@@ -1,6 +1,6 @@
 # Open-Source Growth Log
 
-This file records dated adoption baselines and launch reviews for Mnemo. It is
+This file records dated adoption baselines and launch reviews for Chronem. It is
 evidence for roadmap decisions, not a vanity-metric scoreboard.
 
 Strategic interpretation belongs in [Open-source plan](open-source-plan.md).
@@ -12,7 +12,7 @@ Current implementation state belongs in [Project status](project-status.md).
 
 Do not fill this baseline from guesses, cached values, or pre-release artifacts.
 Record it only after the public `v0.1.0` package has been published and a clean
-`pip install mnemo-memory` has been verified.
+`pip install chronem` has been verified.
 
 Record:
 

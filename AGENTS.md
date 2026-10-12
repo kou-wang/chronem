@@ -1,8 +1,11 @@
 # Shared Agent Instructions
 
 This is the canonical engineering entrypoint for every AI agent working in
-Mnemo, including Codex and Cursor. Tool-specific files may point here, but must
+Chronem, including Codex and Cursor. Tool-specific files may point here, but must
 not maintain a separate copy of project semantics.
+
+Chronem is the current project name. Issue #38 records the naming decision, and
+Issue #39 performs the clean pre-v0.1.0 rename with no legacy import package.
 
 ## Read before implementation
 
@@ -40,7 +43,7 @@ maintainer/architect. Do not guess or silently change architecture.
 
 ## Architecture boundaries
 
-Mnemo is a reusable temporal personal-memory engine, not a generic notes app or
+Chronem is a reusable temporal personal-memory engine, not a generic notes app or
 a thin RAG wrapper. The consumer product is a separate layer.
 
 The hard boundary is:
@@ -98,8 +101,8 @@ Before declaring implementation complete, run:
 ```bash
 ruff check .
 mypy src
-pytest --cov=mnemo --cov-report=term-missing
-coverage report --include="*/mnemo/lifecycle/*" --fail-under=90
+pytest --cov=chronem --cov-report=term-missing
+coverage report --include="*/chronem/lifecycle/*" --fail-under=90
 ```
 
 Fix failures rather than bypassing a gate. CI exposes the stable checks

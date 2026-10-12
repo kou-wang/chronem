@@ -7,8 +7,8 @@ from typing import cast
 import pytest
 from pydantic import ValidationError
 
-import mnemo.evaluation.models as evaluation_models
-from mnemo.evaluation import (
+import chronem.evaluation.models as evaluation_models
+from chronem.evaluation import (
     EvaluationDomain,
     EvaluationReport,
     EvaluationResult,
@@ -21,10 +21,10 @@ from mnemo.evaluation import (
     run_core_evaluations,
     summarize_results,
 )
-from mnemo.evaluation.planning import recall_planning_cases
-from mnemo.models.types import MemoryKind
-from mnemo.recall import RecallMode, RecallOutcome, StructuredRecallRequest
-from mnemo.recall.service import RecallInvariantError, StructuredRecallService
+from chronem.evaluation.planning import recall_planning_cases
+from chronem.models.types import MemoryKind
+from chronem.recall import RecallMode, RecallOutcome, StructuredRecallRequest
+from chronem.recall.service import RecallInvariantError, StructuredRecallService
 
 
 def test_core_contract_dataset_serializes_and_exposes_missing_postgres_domain() -> None:

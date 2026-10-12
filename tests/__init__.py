@@ -1,1 +1,1 @@
-"""Mnemo test suite and reusable test fixtures."""
+"""Chronem test suite and reusable test fixtures."""

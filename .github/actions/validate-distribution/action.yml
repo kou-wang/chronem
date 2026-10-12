@@ -1,5 +1,5 @@
 name: Validate Python distribution
-description: Build, inspect, install, and smoke-test Mnemo's wheel and sdist
+description: Build, inspect, install, and smoke-test Chronem's wheel and sdist
 
 runs:
   using: composite
@@ -23,7 +23,7 @@ runs:
     - name: Smoke-test the installed wheel in a fresh environment
       shell: bash
       run: |
-        smoke_dir="$(mktemp -d "$RUNNER_TEMP/mnemo-wheel-smoke.XXXXXX")"
+        smoke_dir="$(mktemp -d "$RUNNER_TEMP/chronem-wheel-smoke.XXXXXX")"
         python -m venv "$smoke_dir"
         "$smoke_dir/bin/python" -m pip install --upgrade pip
         wheels=(dist/*.whl)
@@ -36,6 +36,6 @@ runs:
           "$smoke_dir/bin/python" "$smoke_dir/smoke_installed_wheel.py"
           "$smoke_dir/bin/python" "$smoke_dir/deterministic_lifecycle.py"
           "$smoke_dir/bin/python" "$smoke_dir/smoke_installed_wheel_postgres.py" \
-            --database-url "$MNEMO_DISTRIBUTION_DATABASE_URL" \
+            --database-url "$CHRONEM_DISTRIBUTION_DATABASE_URL" \
             --source-root "$GITHUB_WORKSPACE"
         )

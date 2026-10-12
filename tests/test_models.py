@@ -11,10 +11,10 @@ from uuid import uuid4
 import pytest
 from pydantic import ValidationError
 
-from mnemo.models.candidate import CandidateMemory
-from mnemo.models.entity import Entity, EntityType
-from mnemo.models.memory import Memory
-from mnemo.models.types import MemoryKind
+from chronem.models.candidate import CandidateMemory
+from chronem.models.entity import Entity, EntityType
+from chronem.models.memory import Memory
+from chronem.models.types import MemoryKind
 
 NOW = datetime.now(UTC)
 

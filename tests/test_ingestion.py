@@ -10,22 +10,22 @@ from uuid import UUID
 import pytest
 from pydantic import ValidationError
 
-from mnemo.entities import DeterministicEntityResolver
-from mnemo.ingestion import (
+from chronem.entities import DeterministicEntityResolver
+from chronem.ingestion import (
     CandidateIngestionOutcome,
     CandidateIngestionResult,
     EntityMentionRole,
     IngestionInvariantError,
     IngestionService,
 )
-from mnemo.interfaces.entities import EntityResolution, EntityResolutionOutcome
-from mnemo.interfaces.repositories import RepositoryInvariantError
-from mnemo.lifecycle.engine import LifecycleAction, LifecycleDecision, LifecycleEngine
-from mnemo.models.candidate import CandidateMemory
-from mnemo.models.capture import Capture, SourceType
-from mnemo.models.entity import Entity, EntityType
-from mnemo.models.memory import Memory
-from mnemo.models.types import MemoryKind, MemoryStatus
+from chronem.interfaces.entities import EntityResolution, EntityResolutionOutcome
+from chronem.interfaces.repositories import RepositoryInvariantError
+from chronem.lifecycle.engine import LifecycleAction, LifecycleDecision, LifecycleEngine
+from chronem.models.candidate import CandidateMemory
+from chronem.models.capture import Capture, SourceType
+from chronem.models.entity import Entity, EntityType
+from chronem.models.memory import Memory
+from chronem.models.types import MemoryKind, MemoryStatus
 
 NOW = datetime(2026, 10, 9, 12, tzinfo=UTC)
 USER_ID = "ingestion-user"

@@ -1,14 +1,15 @@
-"""Smoke-test Mnemo after installing its wheel into a fresh environment."""
+"""Smoke-test Chronem after installing its wheel into a fresh environment."""
 
 from __future__ import annotations
 
 from datetime import UTC, datetime, timedelta
+from importlib import import_module
 from importlib.metadata import version
 from importlib.resources import files
 from uuid import UUID
 
-import mnemo
-from mnemo import LifecycleAction, LifecycleEngine, Memory, MemoryKind
+import chronem
+from chronem import LifecycleAction, LifecycleEngine, Memory, MemoryKind
 
 
 def _parking_memory(*, number: int, value: str, instant: datetime) -> Memory:
@@ -29,11 +30,19 @@ def _parking_memory(*, number: int, value: str, instant: datetime) -> Memory:
 
 def main() -> None:
     """Verify import, packaged resources, and public lifecycle behavior."""
-    if not mnemo.__all__:
-        raise RuntimeError("mnemo public API exports are empty")
-    if not files("mnemo").joinpath("py.typed").is_file():
-        raise RuntimeError("installed wheel is missing mnemo/py.typed")
-    fixture = files("mnemo.evaluation.data").joinpath("recall_planning.json")
+    try:
+        import_module("mnemo")
+    except ModuleNotFoundError as error:
+        if error.name != "mnemo":
+            raise
+    else:
+        raise RuntimeError("legacy mnemo import must not exist in the Chronem wheel")
+
+    if not chronem.__all__:
+        raise RuntimeError("chronem public API exports are empty")
+    if not files("chronem").joinpath("py.typed").is_file():
+        raise RuntimeError("installed wheel is missing chronem/py.typed")
+    fixture = files("chronem.evaluation.data").joinpath("recall_planning.json")
     if not fixture.is_file() or not fixture.read_text(encoding="utf-8").strip():
         raise RuntimeError("installed wheel is missing recall_planning.json")
 
@@ -63,7 +72,7 @@ def main() -> None:
     ):
         raise RuntimeError("installed lifecycle SUPERSEDE smoke failed")
 
-    print(f"installed mnemo-memory {version('mnemo-memory')} wheel smoke: PASS")
+    print(f"installed chronem {version('chronem')} wheel smoke: PASS")
 
 
 if __name__ == "__main__":

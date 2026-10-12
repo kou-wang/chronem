@@ -1,13 +1,13 @@
-# Mnemo Open-Source Plan
+# Chronem Open-Source Plan
 
-> Strategic North Star for Mnemo's open-source development, releases, adoption,
+> Strategic North Star for Chronem's open-source development, releases, adoption,
 > and community growth.
 >
 > Last updated: 2026-10-12
 
 ## North Star
 
-Mnemo's primary near-term objective is to become a credible, useful, and
+Chronem's primary near-term objective is to become a credible, useful, and
 discoverable open-source temporal memory engine for AI applications.
 
 **GitHub Star growth is the primary adoption signal**, but not the only signal.
@@ -19,7 +19,7 @@ The durable product idea is:
 
 > LLMs interpret memory. Deterministic code decides what memory becomes.
 
-Mnemo should differentiate through temporal lifecycle, preserved history,
+Chronem should differentiate through temporal lifecycle, preserved history,
 provenance, conservative identity handling, grounded recall, and fail-closed
 behavior rather than by becoming another thin vector-memory wrapper.
 
@@ -31,7 +31,8 @@ behavior rather than by becoming another thin vector-memory wrapper.
 | Deterministic evaluation | COMPLETE | Required contract domains fail closed in CI |
 | External developer onboarding | COMPLETE | README, quickstart, runnable examples, contribution/security docs |
 | Packaging/release foundations | COMPLETE | Wheel/sdist validation, installed-wheel PostgreSQL migrations, trusted-publishing workflow |
-| First public release | **CURRENT** | Issue #34 — ship v0.1.0 and establish adoption baseline |
+| Pre-release identity migration | **CURRENT** | Issue #39 — complete the Chronem rebrand before release |
+| First public release | **PAUSED** | Issue #34 resumes after the rebrand and repository rename |
 | Launch/discoverability | NEXT | Promotion assets and first deliberate public launch cycle |
 | Integration-driven adoption | PLANNED | Choose one compelling integration from ecosystem/user evidence |
 | Community benchmark/provider evaluation | PLANNED | Build credibility without confusing deterministic tests with model accuracy |
@@ -63,13 +64,16 @@ Exit signal:
 
 ### Phase A — First public release
 
-**Status: CURRENT**
+**Status: PAUSED FOR PRE-RELEASE REBRAND**
 
 Current execution issue:
-- **#34 — Ship v0.1.0 and establish the growth baseline**
+- **#39 — Rebrand the unreleased project to Chronem**
+
+Issue #34 resumes only after this code migration is merged and the maintainer
+renames the GitHub repository.
 
 Objective:
-- make Mnemo a real installable public package rather than only a GitHub source
+- make Chronem a real installable public package rather than only a GitHub source
   repository.
 
 Required outcomes:
@@ -82,7 +86,7 @@ Required outcomes:
 
 Exit signal:
 - a stranger can install the released package from the public package index and
-  reproduce the basic Mnemo experience.
+  reproduce the basic Chronem experience.
 
 Do not add new engine features merely to make v0.1.0 look larger.
 
@@ -98,7 +102,7 @@ Likely work:
 - one concise demo that shows why temporal lifecycle matters;
 - strong repository presentation and GitHub topics;
 - launch copy for appropriate developer communities;
-- technical write-up explaining Mnemo's architectural difference;
+- technical write-up explaining Chronem's architectural difference;
 - a deliberate launch cycle rather than scattered promotion.
 
 Possible channels may include developer communities, technical social platforms,
@@ -117,7 +121,7 @@ feature Issue.
 **Status: PLANNED**
 
 Objective:
-- reduce the cost of trying Mnemo inside tools and ecosystems developers already
+- reduce the cost of trying Chronem inside tools and ecosystems developers already
   use.
 
 Rule:
@@ -134,7 +138,7 @@ Potential categories:
 The exact first integration is TBD until after the v0.1.0 launch cycle.
 
 Exit signal:
-- external users can adopt Mnemo without designing all integration glue
+- external users can adopt Chronem without designing all integration glue
   themselves, and at least one integration produces measurable interest or
   usage.
 
@@ -143,7 +147,7 @@ Exit signal:
 **Status: PLANNED**
 
 Objective:
-- make Mnemo's technical claims inspectable and comparable.
+- make Chronem's technical claims inspectable and comparable.
 
 Likely work:
 - transparent provider/model evaluation;
@@ -157,7 +161,7 @@ Rule:
   results.
 
 Exit signal:
-- external readers can understand what Mnemo is good at, what is measured, and
+- external readers can understand what Chronem is good at, what is measured, and
   what remains unmeasured.
 
 ### Phase E — Community loop
@@ -228,7 +232,7 @@ fixed deadline attached to them.
 | First 25 Stars | Does the positioning/onboarding resonate at all? | Fix README, demo, installation, or initial distribution before adding major features |
 | 100 Stars | Is initial discoverability working beyond close contacts? | Double down on the strongest channel/story and identify integration demand |
 | 500 Stars | Is there recurring external interest rather than one launch spike? | Strengthen integrations, contributor loop, benchmark credibility, release cadence |
-| 1,000+ Stars | Is Mnemo becoming a recognizable open-source project? | Formalize community/release discipline and broaden ecosystem coverage selectively |
+| 1,000+ Stars | Is Chronem becoming a recognizable open-source project? | Formalize community/release discipline and broaden ecosystem coverage selectively |
 
 Do not optimize for a milestone by weakening technical credibility, inflating
 claims, buying fake engagement, or shipping unrelated features.
@@ -255,7 +259,7 @@ A supporting signal can outweigh raw Star growth when it indicates real usage.
 ### v0.1.0
 
 Purpose:
-- define what Mnemo is and make the first trustworthy public installation path.
+- define what Chronem is and make the first trustworthy public installation path.
 
 Do not use v0.1.0 as a reason to add more features.
 
@@ -277,13 +281,13 @@ Use for:
 - an intentional breaking change during pre-1.0 development.
 
 A minor release should give an external developer a clear reason to look at
-Mnemo again.
+Chronem again.
 
 Do not bump versions mechanically for every merged PR.
 
 ## Operating loop
 
-Mnemo does **not** use a fixed "finish Issue -> automatically create next feature
+Chronem does **not** use a fixed "finish Issue -> automatically create next feature
 Issue" process.
 
 Use this loop:
@@ -305,6 +309,15 @@ After launch-oriented work, always include a measurement/review step before
 committing to the next major technical capability.
 
 ## Direction change log
+
+### 2026-10-12 — Mnemo renamed to Chronem before first public release
+
+Reason:
+- `mnemo-memory` was already occupied on PyPI by another AI-memory project;
+- Mnemo was crowded in the same ecosystem;
+- the rename occurred before public release to avoid compatibility and migration
+  burden;
+- Chronem reinforces the project's temporal-memory differentiation.
 
 ### 2026-10-12 — Open-source adoption became the primary near-term objective
 
@@ -348,21 +361,24 @@ Reason:
 
 ## Current next actions
 
-1. Complete the **v0.1.0 release-preparation PR** under Issue #34.
-2. Run the release dry-run workflow against the exact merged release commit.
-3. Confirm PyPI/GitHub trusted-publishing account configuration.
-4. Create `v0.1.0` and run the release workflow with publishing disabled.
-5. Obtain explicit maintainer approval before enabling PyPI publishing.
-6. Verify the real public package installation and PostgreSQL extra.
-7. Record the first adoption baseline in
+1. Complete and review the Chronem rebrand under Issue #39.
+2. Have the maintainer rename the GitHub repository to `kou-wang/chronem`.
+3. Resume Issue #34 and re-verify canonical URLs and package metadata.
+4. Run the release dry-run workflow against the exact merged release commit.
+5. Configure a new PyPI trusted publisher for the `chronem` project and renamed
+   repository.
+6. Create `v0.1.0` and run the release workflow with publishing disabled.
+7. Obtain explicit maintainer approval before enabling PyPI publishing.
+8. Verify the real public package installation and PostgreSQL extra.
+9. Record the first adoption baseline in
    [Open-source growth log](open-source-growth.md).
-8. Perform a Launch Review and create the Phase B launch/discoverability Issue.
-9. After the launch cycle, inspect real feedback before selecting the first
+10. Perform a Launch Review and create the Phase B launch/discoverability Issue.
+11. After the launch cycle, inspect real feedback before selecting the first
    major integration or new engine capability.
 
 ## AI / maintainer resume checklist
 
-When resuming Mnemo work:
+When resuming Chronem work:
 
 1. Read the current GitHub Issue first for task scope.
 2. Read `AGENTS.md`.
