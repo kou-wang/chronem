@@ -58,6 +58,10 @@ boundaries. There is currently no semantic/vector retrieval implementation.
 
 Requirements: Python 3.11 or 3.12 and Git.
 
+Mnemo is not published on PyPI yet. Install from a source checkout as shown
+below; do not assume `pip install mnemo-memory` is available until a release is
+listed on the package index.
+
 ```bash
 git clone https://github.com/kou-wang/mnemo-memory.git
 cd mnemo-memory
@@ -139,6 +143,18 @@ This is a software-contract result, **not a claim of AI or live-model accuracy**
 Provider/model quality evaluation is separate and is not currently a CI gate.
 See [Evaluation](docs/evaluation.md) for the exact scope and command.
 
+## Distribution status
+
+CI builds both a wheel and source distribution, validates their metadata and
+required package data, installs the wheel into a fresh virtual environment, and
+runs the public lifecycle smoke test plus the zero-network example from that
+installed wheel. This validates release artifacts without publishing them.
+
+Public releases are intentional maintainer actions using version tags and PyPI
+trusted publishing; no static package-index credential is stored in the
+repository. Mnemo has not yet been published. See the [changelog](CHANGELOG.md)
+and [release process](docs/releasing.md).
+
 ## Optional OpenAI adapters
 
 ```bash
@@ -157,6 +173,8 @@ deterministic examples require neither an API key nor a live model call.
 - [Roadmap](docs/roadmap.md)
 - [Project status](docs/project-status.md)
 - [Development workflow](docs/development-workflow.md)
+- [Release process](docs/releasing.md)
+- [Changelog](CHANGELOG.md)
 
 ## License
 

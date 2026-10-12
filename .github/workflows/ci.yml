@@ -9,6 +9,30 @@ permissions:
   contents: read
 
 jobs:
+  distribution:
+    name: Distribution package
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Build and validate distributions
+        uses: ./.github/actions/validate-distribution
+
+      - name: Upload validated distributions
+        uses: actions/upload-artifact@v7
+        with:
+          name: python-distributions-${{ github.sha }}
+          path: dist/
+          if-no-files-found: error
+          retention-days: 7
+
   quality:
     name: Quality gates (Python ${{ matrix.python-version }})
     runs-on: ubuntu-latest

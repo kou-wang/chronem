@@ -1,0 +1,40 @@
+name: Release dry run
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Commit, branch, or tag to validate
+        required: true
+        default: main
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Build and validate release artifacts
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out requested ref
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.ref }}
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Build and validate distributions
+        uses: ./.github/actions/validate-distribution
+
+      - name: Upload dry-run artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: release-dry-run-${{ github.sha }}
+          path: dist/
+          if-no-files-found: error
+          retention-days: 14
