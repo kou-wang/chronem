@@ -361,19 +361,18 @@ Reason:
 
 ## Current next actions
 
-1. Complete and review the Chronem rebrand under Issue #39.
-2. Have the maintainer rename the GitHub repository to `kou-wang/chronem`.
-3. Resume Issue #34 and re-verify canonical URLs and package metadata.
-4. Run the release dry-run workflow against the exact merged release commit.
-5. Configure a new PyPI trusted publisher for the `chronem` project and renamed
-   repository.
-6. Create `v0.1.0` and run the release workflow with publishing disabled.
-7. Obtain explicit maintainer approval before enabling PyPI publishing.
-8. Verify the real public package installation and PostgreSQL extra.
-9. Record the first adoption baseline in
+1. Complete the post-rebrand status synchronization.
+2. Run a fresh release dry run against the exact merged Chronem commit.
+3. Confirm the GitHub `pypi` environment and configure the PyPI Trusted
+   Publisher for project `chronem`, repository `kou-wang/chronem`, workflow
+   `release.yml`, environment `pypi`.
+4. Create `v0.1.0` and run the release workflow with publishing disabled.
+5. Obtain explicit maintainer approval before enabling PyPI publishing.
+6. Verify the real public package installation and PostgreSQL extra.
+7. Record the first adoption baseline in
    [Open-source growth log](open-source-growth.md).
-10. Perform a Launch Review and create the Phase B launch/discoverability Issue.
-11. After the launch cycle, inspect real feedback before selecting the first
+8. Perform a Launch Review and create the Phase B launch/discoverability Issue.
+9. After the launch cycle, inspect real feedback before selecting the first
    major integration or new engine capability.
 
 ## AI / maintainer resume checklist
