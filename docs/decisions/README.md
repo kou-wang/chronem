@@ -129,3 +129,47 @@ transitions cannot set `SUPERSEDED`.
 
 This decision does not select a vector index, retrieval strategy, service API,
 or asynchronous database stack.
+
+## ADR-012 — Authoritative external state and verified mutations
+
+**Status:** Accepted
+
+Chronem memory is not automatically the authoritative source of truth for an
+external resource. Chronem may remember information about a resource or where
+its authoritative data lives, but a file, calendar, repository, connected
+account, record system, or other external source remains authoritative when the
+application declares it so. Such a source must not be duplicated into Chronem
+as a competing authority merely for convenience.
+
+`MemoryRepository` owns Chronem memory persistence only. Future adapters that
+read or mutate authoritative external resources are a separate resource/action
+boundary and must not be folded into memory repository contracts.
+
+Interpretation does not itself authorize or complete an external mutation.
+Applications must define an explicit action or commit boundary where the
+workflow requires one. When supported by the external system, a mutation should
+follow this sequence:
+
+```text
+read current state
+-> validate intended mutation
+-> write
+-> read back
+-> verify the postcondition
+-> report success
+```
+
+A write request returning without error is not, by itself, proof of verified
+persistence. If read-back or postcondition verification is unavailable or
+fails, the application must not claim that the mutation was verified.
+
+Mutation paths should use conditional or version-aware writes when the resource
+provides a version, ETag, revision, expected SHA, generation number, or
+equivalent concurrency token. Stale state and material ambiguity in identifiers,
+units, targets, or other mutation parameters fail closed rather than being
+silently overwritten or guessed.
+
+This decision extends ADR-002, ADR-008, and ADR-009 to future external side
+effects. It does not change current memory lifecycle semantics or prescribe a
+class hierarchy, connector SDK, or concrete runtime interface name; those
+details remain `TBD` until a scoped implementation Issue exists.

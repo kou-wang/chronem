@@ -319,6 +319,51 @@ Live model accuracy is a separate, non-CI activity: mocked provider responses
 must never be presented as extraction, planning, or answer-quality evidence.
 See [Evaluation](evaluation.md) for the dataset and command boundaries.
 
+## Future integration boundary: authoritative external resources
+
+**FUTURE — not implemented.** This section constrains later integration design;
+it does not add an external adapter to the current architecture diagram or
+change the implemented Chronem memory engine.
+
+`MemoryRepository` owns persistence of Chronem `Memory` records and their
+lifecycle transitions only. It is not a generic side-effect interface. A future
+integration that reads or mutates a file, calendar, repository, connected
+account, record system, or other authoritative external resource must place that
+behavior behind a separate resource/action boundary. Concrete runtime interface
+names remain `TBD` until an implementation Issue defines them.
+
+Chronem may retain memory about an external resource, including provenance or a
+pointer to the authoritative location. That does not make Chronem a competing
+source of truth. When an application declares an external system authoritative,
+the external state remains authoritative and should not be copied into memory
+merely to make mutation workflows convenient.
+
+Interpretation alone neither authorizes nor completes an external mutation. An
+application must define its explicit action or commit semantics and must resolve
+material ambiguity before writing. When the external system supports the
+operations, the verified mutation path is:
+
+```text
+read current authoritative state
+-> validate the intended mutation
+-> conditionally write
+-> read back authoritative state
+-> verify the expected postcondition
+-> report verified success
+```
+
+Conditional writes should use an available version, ETag, revision, expected
+SHA, generation number, or equivalent concurrency token so stale observations
+fail closed instead of overwriting newer state. A successful write/API response
+without read-back and postcondition validation is not sufficient evidence of a
+verified mutation. If verification is unsupported or fails, the application
+must represent that limitation or failure accurately rather than claim verified
+persistence. Unresolved identifiers, units, targets, or other material
+parameters must also fail closed.
+
+See ADR-012 for the durable decision. Issue #42 remains the active Phase B
+execution path; this future boundary adds no connector or runtime scope to it.
+
 ## Domain invariants
 
 1. `memory_key` is a `CURRENT_STATE`-only concept: it is required (and
