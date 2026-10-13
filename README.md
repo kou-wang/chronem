@@ -56,20 +56,24 @@ resolution → lifecycle engine → PostgreSQL → recall planning → structure
 → grounded answer. Provider-independent interfaces separate the grouped
 boundaries. There is currently no semantic/vector retrieval implementation.
 
-## 5-minute quickstart — no API key, database, or network calls
+## 5-minute quickstart — no API key or database
 
-Requirements: Python 3.11 or 3.12 and Git.
+Requirements: Python 3.11 or 3.12.
 
-Chronem is not published on PyPI yet. Install from a source checkout as shown
-below; do not assume `pip install chronem` is available until a release is
-listed on the package index.
+Install the public release from PyPI:
 
 ```bash
-git clone https://github.com/kou-wang/chronem.git
-cd chronem
 python -m venv .venv
 source .venv/bin/activate  # Windows PowerShell: .venv\Scripts\Activate.ps1
-python -m pip install -e .
+python -m pip install "chronem==0.1.0"
+```
+
+To run the repository's zero-network lifecycle walkthrough against that installed
+package:
+
+```bash
+git clone --depth 1 https://github.com/kou-wang/chronem.git
+cd chronem
 python examples/deterministic_lifecycle.py
 ```
 
@@ -115,7 +119,7 @@ to the same migrations packaged with the PostgreSQL adapter. From an installed
 wheel, no repository-local Alembic configuration is needed:
 
 ```bash
-python -m pip install "path/to/chronem-0.1.0-py3-none-any.whl[postgres]"
+python -m pip install "chronem[postgres]==0.1.0"
 python -m chronem.persistence.postgres.migrations \
   --database-url "$CHRONEM_DATABASE_URL"
 ```
@@ -167,17 +171,19 @@ required package data, installs the wheel into a fresh virtual environment, and
 runs the public lifecycle smoke test plus the zero-network example from that
 installed wheel. It also installs the wheel's PostgreSQL extra, migrates a fresh
 database using only packaged resources, and exercises a PostgreSQL repository.
-This validates release artifacts without publishing them.
+The first public release, `chronem==0.1.0`, is published on PyPI and was
+verified from a clean Python 3.11 virtual environment, including the packaged
+PostgreSQL migration entrypoint.
 
 Public releases are intentional maintainer actions using version tags and PyPI
 trusted publishing; no static package-index credential is stored in the
-repository. Chronem has not yet been published. See the [changelog](CHANGELOG.md)
+repository. See the [changelog](CHANGELOG.md), [GitHub releases](https://github.com/kou-wang/chronem/releases),
 and [release process](docs/releasing.md).
 
 ## Optional OpenAI adapters
 
 ```bash
-python -m pip install -e ".[openai]"
+python -m pip install "chronem[openai]==0.1.0"
 ```
 
 `OpenAIExtractor`, `OpenAIRecallPlanner`, and `OpenAIAnswerSynthesizer` are

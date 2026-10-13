@@ -35,7 +35,7 @@ def test_release_dry_run_cannot_publish() -> None:
     assert "id-token: write" not in workflow
 
 
-def test_version_stays_pre_release_and_readme_does_not_claim_pypi_availability() -> None:
+def test_published_v0_1_0_metadata_and_readme_installation() -> None:
     with (ROOT / "pyproject.toml").open("rb") as pyproject:
         configuration = tomllib.load(pyproject)
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
@@ -45,7 +45,8 @@ def test_version_stays_pre_release_and_readme_does_not_claim_pypi_availability()
     assert configuration["tool"]["hatch"]["build"]["targets"]["wheel"][
         "packages"
     ] == ["src/chronem"]
-    assert "Chronem is not published on PyPI yet" in readme
+    assert 'python -m pip install "chronem==0.1.0"' in readme
+    assert "Chronem is not published on PyPI yet" not in readme
     assert "pip install mnemo-memory" not in readme
     assert not (ROOT / "src" / "mnemo").exists()
 

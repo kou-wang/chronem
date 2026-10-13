@@ -4,11 +4,11 @@ Last updated: 2026-10-12
 
 ## Current phase
 
-**First public release and growth baseline (Issue #34)**
+**Launch and discoverability (Issue #42)**
 
-Strategic phase: **Phase A — First public release**
+Strategic phase: **Phase B — Launch and discoverability**
 
-Current checkpoint: **Post-rebrand release revalidation**
+Current checkpoint: **v0.1.0 published, public install verified, baseline recorded**
 
 Canonical repository: `kou-wang/chronem`
 
@@ -299,29 +299,39 @@ Implemented:
 - a pre-1.0 versioning policy, changelog, and maintainer release checklist
 - accurate source-install and unpublished-package documentation
 
-## In progress
-
 ### Issue #34 — First public release and growth baseline
 
-The pre-release rebrand is complete. Chronem now uses:
-- brand: Chronem
-- distribution: `chronem`
-- Python import: `chronem`
-- canonical repository: `kou-wang/chronem`
+Completed and verified.
 
-Release work has resumed with post-rename revalidation before trusted publishing
-or tag creation.
+Release outcomes:
+- canonical brand/repository/package identity is Chronem / `kou-wang/chronem` / `chronem`;
+- `v0.1.0` tag points to the approved release commit;
+- release dry run and non-publishing tagged build passed;
+- PyPI Trusted Publishing published `chronem==0.1.0`;
+- GitHub Release `Chronem v0.1.0` is public;
+- clean Python 3.11 installation imported from `site-packages`;
+- packaged PostgreSQL migration CLI was verified from the public installation;
+- the dated adoption baseline is recorded in
+  [Open-source growth log](open-source-growth.md).
+
+## In progress
+
+### Issue #42 — Launch Chronem v0.1.0 and measure discoverability
+
+Phase B now focuses on discoverability, repository presentation, a concise
+temporal-lifecycle demo, deliberate channel selection, and measuring external
+response before selecting the next major capability.
 
 ## Next
 
-1. Merge the post-rebrand status synchronization PR
-2. Run a fresh release dry run against the exact merged Chronem commit
-3. Confirm GitHub `pypi` environment and PyPI Trusted Publisher for `chronem`
-4. Create `v0.1.0` and run a non-publishing release build
-5. Require explicit maintainer approval before PyPI publishing
-6. Verify the real public installation
-7. Record the adoption baseline in [Open-source growth log](open-source-growth.md)
-8. Perform a Launch Review and create the Phase B launch/discoverability Issue
+1. Merge the post-release documentation/status synchronization PR
+2. Execute Issue #42 repository presentation and launch-asset work
+3. Select a small number of current, relevant launch channels
+4. Run at least one deliberate public launch cycle
+5. Measure Stars, forks, external activity, adoption signals, and qualitative feedback
+6. Perform the Launch Review
+7. Choose the next major Issue from observed evidence rather than automatically
+   adding semantic/vector retrieval
 
 ## Current constraints
 

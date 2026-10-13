@@ -8,31 +8,38 @@ Current implementation state belongs in [Project status](project-status.md).
 
 ## v0.1.0 baseline
 
-**Status: PENDING PUBLIC RELEASE VERIFICATION**
+**Status: VERIFIED**
 
-Do not fill this baseline from guesses, cached values, or pre-release artifacts.
-Record it only after the public `v0.1.0` package has been published and a clean
-`pip install chronem` has been verified.
-
-Record:
+Observed immediately after the public release and clean-install verification.
 
 | Signal | Baseline |
 | --- | --- |
-| Baseline timestamp | PENDING |
-| GitHub Stars | PENDING |
-| GitHub forks | PENDING |
-| External open Issues / PRs | PENDING |
-| External contributors | PENDING |
-| PyPI release | PENDING |
-| Public install verification | PENDING |
-| Known external integrations | 0 unless independently verified |
-| Known external users | 0 unless independently verified |
+| Baseline timestamp | 2026-10-12T22:26:19Z |
+| GitHub Stars | 0 |
+| GitHub forks | 0 |
+| External open Issues / PRs | 0 |
+| External contributors | 0 verified |
+| PyPI release | `chronem==0.1.0` published |
+| Public install verification | PASS — clean Python 3.11 venv, site-packages import, PostgreSQL migration CLI |
+| Known external integrations | 0 verified |
+| Known external users | 0 verified |
+
+Evidence:
+- GitHub Release `Chronem v0.1.0` was published from tag `v0.1.0`;
+- PyPI trusted publishing accepted the wheel and source distribution;
+- a clean Python 3.11 virtual environment imported `chronem==0.1.0` from
+  `site-packages`;
+- the installed PostgreSQL extra exposed
+  `python -m chronem.persistence.postgres.migrations --help`;
+- at baseline observation time, the repository reported 0 Stars and 0 forks;
+- Issue #34 was maintainer-created and there were no open pull requests, so no
+  external open Issue/PR activity was counted.
 
 Notes:
 - distinguish maintainer-created Issues/PRs from external activity;
 - do not fabricate PyPI downloads or installation counts;
-- record the observation timestamp because repository metrics change;
-- the first baseline is a starting point, not a success/failure judgment.
+- record future observations with timestamps because repository metrics change;
+- this baseline is a starting point, not a success/failure judgment.
 
 ## Launch review template
 
