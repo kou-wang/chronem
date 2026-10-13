@@ -109,6 +109,23 @@ external-developer needs while keeping provider-independent contracts
 authoritative. Integrations must not bypass deterministic lifecycle,
 user-isolation, provenance, or grounded-recall boundaries.
 
+Future integrations that mutate authoritative external systems must:
+
+- declare which external system or resource is authoritative;
+- preserve the boundary between Chronem memory persistence and external
+  resource/action behavior;
+- define explicit action, commit, and mutation semantics rather than treating
+  interpretation as authorization;
+- use version, ETag, revision, expected-SHA, or equivalent concurrency
+  protection where the authoritative system supports it;
+- define read-back and postcondition verification for successful mutations, and
+  avoid claiming verified persistence when verification is unavailable;
+- fail closed on material ambiguity, including unresolved identifiers, units,
+  or targets.
+
+These are constraints for future scoped integration Issues, not implemented
+runtime interfaces. Issue #42 remains the active Phase B execution path.
+
 ## 14. Community-facing provider-quality evaluation
 
 Define transparent datasets, model/provider metadata, execution policy, and
