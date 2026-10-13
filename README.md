@@ -56,20 +56,73 @@ resolution → lifecycle engine → PostgreSQL → recall planning → structure
 → grounded answer. Provider-independent interfaces separate the grouped
 boundaries. There is currently no semantic/vector retrieval implementation.
 
-## 5-minute quickstart — no API key or database
+## 30-second demo — no API key or database
 
 Requirements: Python 3.11 or 3.12.
 
-Install the public release from PyPI:
+Install the public release from PyPI, then paste this directly into your shell:
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate  # Windows PowerShell: .venv\Scripts\Activate.ps1
 python -m pip install "chronem==0.1.0"
+python - <<'PY'
+from uuid import UUID
+
+from chronem import LifecycleEngine, Memory, MemoryKind, MemoryStatus
+
+car_id = UUID("00000000-0000-0000-0000-000000000001")
+
+
+def parking(value: str, number: int) -> Memory:
+    return Memory(
+        id=UUID(int=number),
+        user_id="demo",
+        kind=MemoryKind.CURRENT_STATE,
+        subject_entity_id=car_id,
+        predicate="parked_at",
+        value=value,
+        memory_key=Memory.build_memory_key(car_id, "parked_at"),
+    )
+
+
+lifecycle = LifecycleEngine()
+first = parking("A1", 1)
+repeat = parking("A1", 2)
+moved = parking("B7", 3)
+decisions = [
+    lifecycle.reconcile(existing_active=[], incoming=first),
+    lifecycle.reconcile(existing_active=[first], incoming=repeat),
+    lifecycle.reconcile(existing_active=[first], incoming=moved),
+]
+history = [
+    first.model_copy(
+        update={"status": MemoryStatus.SUPERSEDED, "superseded_by_id": moved.id}
+    ),
+    moved,
+]
+
+print("actions:", " -> ".join(decision.action.value for decision in decisions))
+print("current:", moved.value)
+print("history:", " -> ".join(f"{item.value} ({item.status.value})" for item in history))
+PY
 ```
 
-To run the repository's zero-network lifecycle walkthrough against that installed
-package:
+Expected output:
+
+```text
+actions: APPEND -> NOOP -> SUPERSEDE
+current: B7
+history: A1 (SUPERSEDED) -> B7 (ACTIVE)
+```
+
+This is the distinctive deterministic core: an identical current state is a
+no-op, a changed value supersedes the active record, and the old value remains
+in history. The lifecycle engine makes the decision without a model or network
+call; persistence adapters apply it atomically when storage is configured.
+
+## Fuller repository example
+
+The repository keeps the same zero-network lifecycle walkthrough as a standalone
+example with explicit timestamps and validation:
 
 ```bash
 git clone --depth 1 https://github.com/kou-wang/chronem.git
@@ -77,20 +130,9 @@ cd chronem
 python examples/deterministic_lifecycle.py
 ```
 
-Expected output:
-
-```text
-first_capture: APPEND
-repeat_capture: NOOP
-moved_capture: SUPERSEDE
-active_parking: B7
-history: A1 (SUPERSEDED) -> B7 (ACTIVE)
-```
-
-This is the distinctive deterministic core: an identical current state is a
-no-op, a changed value supersedes the active record, and the old value remains
-in history. See [the example](examples/deterministic_lifecycle.py) for the public
-API calls.
+It prints the same `APPEND -> NOOP -> SUPERSEDE` sequence and retained
+`A1 (SUPERSEDED) -> B7 (ACTIVE)` history. It uses only Chronem's public API and
+requires neither PostgreSQL nor an OpenAI API key.
 
 ## PostgreSQL engine example
 
